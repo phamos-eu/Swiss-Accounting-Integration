@@ -3,4 +3,5 @@
 *.egg-info
 *.swp
 tags
+node_modules
 swiss_accounting_integration/docs/current

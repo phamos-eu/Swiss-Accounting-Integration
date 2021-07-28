@@ -5,9 +5,9 @@
   "main": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build src/*.js --out-dir ./grynnswissqrbill/public/js",
-    "production": "NODE_ENV=production parcel src/*.js  --out-dir ./grynnswissqrbill/public/js",
-    "watch": "parcel src/*.js --out-dir ./grynnswissqrbill/public/js"
+    "build": "parcel build src/*.js --out-dir ./swiss_accounting_integration/public/js",
+    "production": "NODE_ENV=production parcel src/*.js  --out-dir ./swiss_accounting_integration/public/js",
+    "watch": "parcel src/*.js --out-dir ./swiss_accounting_integration/public/js"
   },
   "author": "",
   "license": "MIT",
