@@ -4,4 +4,4 @@ ERPNexts functionality with Swiss QR Integration and Abacus Export
 
 #### License
 
-MIT
+GNU GPL V3
