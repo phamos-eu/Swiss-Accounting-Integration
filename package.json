@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
+    "build": "webpack",
     "production": "NODE_ENV=production parcel build src/*.js  --out-dir ./swiss_accounting_integration/public/js",
     "watch": "parcel src/*.js --out-dir ./swiss_accounting_integration/public/js"
   },
@@ -19,7 +19,9 @@
     "eslint": "^7.26.0",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.3.0",
-    "prettier-eslint": "^12.0.0"
+    "prettier-eslint": "^12.0.0",
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.7.2"
   },
   "browserslist": [
     "last 1 Chrome version"
