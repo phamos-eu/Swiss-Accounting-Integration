@@ -10,6 +10,8 @@ app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "paideepak@gmail.com"
 app_license = "MIT"
+fixtures = [{"dt": "Custom Field", "filters": [
+    ["fieldname", "in", ("esr_reference_code")]]}]
 
 # Includes in <head>
 # ------------------
@@ -17,6 +19,7 @@ app_license = "MIT"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/swiss_accounting_integration/css/swiss_accounting_integration.css"
 # app_include_js = "/assets/swiss_accounting_integration/js/swiss_accounting_integration.js"
+app_include_js = "/assets/swiss_accounting_integration/js/index.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/swiss_accounting_integration/css/swiss_accounting_integration.css"
@@ -142,4 +145,3 @@ app_license = "MIT"
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
-
