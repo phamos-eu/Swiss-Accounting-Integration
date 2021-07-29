@@ -65,7 +65,7 @@ export const uploadFileAsAttachment = (file, docname, frm) => {
  */
 export const showError = (error) => {
   window.frappe.hide_progress();
-  window.frappe.throw(error);
+  window.frappe.throw(error + "");
 };
 
 /**
