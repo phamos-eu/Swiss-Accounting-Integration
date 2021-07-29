@@ -1,11 +1,11 @@
 {
-  "name": "grynnswissqrbill",
+  "name": "swiss_accounting_integration",
   "version": "1.0.0",
   "description": "A Grynn Qr Bill",
-  "main": "src/index.html",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build src/*.js --out-dir ./swiss_accounting_integration/public/js",
+    "build": "rollup -c",
     "production": "NODE_ENV=production parcel build src/*.js  --out-dir ./swiss_accounting_integration/public/js",
     "watch": "parcel src/*.js --out-dir ./swiss_accounting_integration/public/js"
   },
