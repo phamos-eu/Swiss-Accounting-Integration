@@ -27,8 +27,6 @@ export const generateQRPDF = (
       language: language || "DE",
       size: papersize || "A4",
     });
-    console.log(pdf);
-    console.log(SwissQRBill, SwissQRBill.PDF, SwissQRBill.BlobStream);
     showProgress(60, "generating pdf...");
     pdf.on("finish", () => {
       // const url = stream.toBlobURL("application/pdf");
