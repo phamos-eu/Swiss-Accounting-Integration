@@ -83,29 +83,13 @@ class AbacusFileExports(Document):
         pes = self.get_docs(docs, "Payment Entry")
         jvs = self.get_docs(docs, "Journal Entry")
 
-        update_query = """UPDATE `tabSales Invoice`
-                SET `tabSales Invoice`.`exported_to_abacus` = 1
-                WHERE
-                    `tabSales Invoice`.`name` IN ({sinvs});""".format(
-            sinvs=self.get_sql_list(sinvs))
-        frappe.db.sql(update_query)
-        update_query = """UPDATE `tabPurchase Invoice`
-                SET `tabPurchase Invoice`.`exported_to_abacus` = 1
-                WHERE
-                    `tabPurchase Invoice`.`name` IN ({pinvs});""".format(
-            pinvs=self.get_sql_list(pinvs))
-        frappe.db.sql(update_query)
-        update_query = """UPDATE `tabPayment Entry`
-                SET `tabPayment Entry`.`exported_to_abacus` = 1
-                WHERE
-                    `tabPayment Entry`.`name` IN ({pes});""".format(
-            pes=self.get_sql_list(pes))
-        frappe.db.sql(update_query)
-        update_query = """UPDATE `tabJournal Entry`
-                SET `tabJournal Entry`.`exported_to_abacus` = 1
-                WHERE
-                    `tabJournal Entry`.`name` IN ({jvs});""".format(
-            jvs=self.get_sql_list(jvs))
-        frappe.db.sql(update_query)
-        return
-        pass
+        # Aggregated
+        all_docs = sinvs + pinvs + pes + jvs
+
+        # Implement Update
+        # Update
+        all_docs['exported_to_abacus'] = 1
+
+        # TODO: implement Save
+        # Save
+        all_docs.save()
