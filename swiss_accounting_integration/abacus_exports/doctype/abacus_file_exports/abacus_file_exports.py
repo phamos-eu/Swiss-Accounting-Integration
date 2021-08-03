@@ -6,5 +6,19 @@ from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
 
+
 class AbacusFileExports(Document):
-	pass
+    def submit(self):
+        '''
+        On Submit Hook
+        Check out 
+        https://frappeframework.com/docs/user/en/basics/doctypes/controllers#controller-hooks
+        '''
+        self.get_transactions()
+        return
+
+    def get_transactions(self):
+        """
+        What is Transations 
+        """
+        pass
