@@ -86,10 +86,21 @@ class AbacusFileExports(Document):
         # Aggregated
         all_docs = sinvs + pinvs + pes + jvs
 
-        # Implement Update
+        # TODO
         # Update
         all_docs['exported_to_abacus'] = 1
 
         # TODO: implement Save
         # Save
         all_docs.save()
+
+    def get_docs(self, references, dt):
+        """
+        Getting Docs Where
+            dt == 'Sales Invoice'
+        """
+        docs = []
+        for d in references:
+            if d['dt'] == dt:
+                docs.append(d['dn'])
+        return docs
