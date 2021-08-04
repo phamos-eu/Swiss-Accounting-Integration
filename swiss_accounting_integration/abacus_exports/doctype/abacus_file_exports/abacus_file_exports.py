@@ -104,3 +104,21 @@ class AbacusFileExports(Document):
             if d['dt'] == dt:
                 docs.append(d['dn'])
         return docs
+
+    def reset_export_flags(self):
+        """
+        Reset Flags to exported_to_abacus = 0
+        Used From Frontend As a Service
+        """
+        sinvs = frappe.db.get_list('Sales Invoice')
+        purchase_invoice = frappe.db.get_list('Sales Invoice')
+        payment_entry = frappe.db.get_list('Payment Invoice')
+        journal_entry = frappe.db.get_list('Journal Invoice')
+
+        # Updating
+        docs = sinvs + purchase_invoice + payment_entry + journal_entry
+
+        docs.update({
+            'exported_to_abacus': 0
+        })
+        pass
