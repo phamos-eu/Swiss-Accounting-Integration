@@ -9,7 +9,7 @@ from frappe.model.document import Document
 
 
 class AbacusFileExports(Document):
-    def submit(self):
+    def submitd(self):
         '''
         On Submit Hook
         Check out 
@@ -94,7 +94,7 @@ class AbacusFileExports(Document):
         # Save
         all_docs.save()
 
-    def get_docs(self, references, dt):
+    def get_docs_d(self, references, dt):
         """
         Getting Docs Where
             dt == 'Sales Invoice'
@@ -105,7 +105,7 @@ class AbacusFileExports(Document):
                 docs.append(d['dn'])
         return docs
 
-    def reset_export_flags(self):
+    def reset_export_flags_d(self):
         """
         Reset Flags to exported_to_abacus = 0
         Used From Frontend As a Service
