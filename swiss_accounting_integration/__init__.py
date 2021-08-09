@@ -26,9 +26,11 @@ def gl():
     The Getting the GL Entry and Creating the Data Structure
     """
 
-    entries = frappe.db.get_list('GL Entry', fields=["*"], filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    entries = frappe.db.get_list('GL Entry',
+                                 fields=["*"],
+                                 filters={
+                                     'posting_date': ['>=', '08-09-2021']
+                                 })
 
     for entry in entries:
         entryLevel = 'A'
@@ -40,16 +42,11 @@ def gl():
         document_no = entry.name
         date = entry.posting_date
         value_date = entry.posting_date
-
-        # Customer Currency
-        keyCurrency = 'CHF'
-        # currency invoice
-        currency = 'CHF'
-        # Amount (credit or debit)
-        amount = 1299
-        # Amount in key Currency
+        doc = frappe.get_doc(entry.voucher_type, entry.voucher_no)
+        keyCurrency = doc.party_account_currency
+        currency = doc.currency
+        amount = doc.total
         keyAmount = 123
-        # Account (Debit or credit)
         account = 133
         # Tax Account
         taxAccount = 1330
