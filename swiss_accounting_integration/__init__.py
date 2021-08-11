@@ -182,13 +182,7 @@ def gl(company):
     content = frappe.render_template('abacus.html', data)
 
     # Response
-
-    resp = Response()
-    resp.mimetype = 'text/xml'
-    resp.charset = 'utf-8'
-    resp.data = content
-
-    return resp
+    return get_xml(content)
 
 
 def getAccountNumber(account_name):
@@ -203,6 +197,19 @@ def getAccountNumber(account_name):
 
 
 def docs(doc):
+    "Get Docs"
     return frappe.get_list(doc, filters={
         'posting_date': ['>=', '08-09-2021']
     })
+
+
+def get_xml(content):
+    """
+    Create XML Response
+    """
+    resp = Response()
+    resp.mimetype = 'text/xml'
+    resp.charset = 'utf-8'
+    resp.data = content
+
+    return resp
