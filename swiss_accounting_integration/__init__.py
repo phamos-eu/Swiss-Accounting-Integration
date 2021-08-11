@@ -160,6 +160,7 @@ def gl():
             'tax_code': None,
             'text1': cgi.escape(inv.name)
         }
+
         if inv.multi_currency == 1:
             transaction['exchange_rate'] = inv.accounts[0].exchange_rate
             transaction['key_currency'] = inv.accounts[0].account_currency
@@ -189,6 +190,8 @@ def gl():
     }
 
     content = frappe.render_template('abacus.html', data)
+
+    # Response
 
     resp = Response()
     resp.mimetype = 'text/xml'
