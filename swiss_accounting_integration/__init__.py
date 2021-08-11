@@ -15,17 +15,22 @@ def gl(company):
     Abacus XML
     """
 
+    # Transactions
     transactions = []
+
+    # Base Currency
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
 
+    # Invoice
     invoices = docs('Sales Invoice')
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
+
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
                 "Sales Taxes and Charges Template", inv.taxes_and_charges)
-            tax_code = 312  # tax_record.tax_code
+            tax_code = getattr(tax_record, 'tax_code', 312)
             rate = tax_record.taxes[0].rate
             taxAccount = tax_record.taxes[0].account_head
         else:
