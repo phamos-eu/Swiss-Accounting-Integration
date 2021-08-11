@@ -5,6 +5,8 @@ import frappe
 from .utils import get_aggregated_transaction, get_individual_transation
 import frappe
 import datetime
+import cgi
+from os import path
 
 __version__ = '0.0.1'
 
@@ -166,33 +168,91 @@ def gl2():
 
     # Payment Entry
 
-    paymentEntry = frappe.get_list('Purchase Invoice', filters={
+    paymentEntry = frappe.get_list('Payment Entry', filters={
         'posting_date': ['>=', '08-09-2021']
     })
 
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
-
-        for item in inv.items:
-            transactions.append({
-                'account': getAccountNumber(inv.paid_from),
+        transactions.append({
+            'account': getAccountNumber(inv.paid_from),
+            'amount': inv.paid_amount,
+            'singles': [{
+                'account':  getAccountNumber(inv.paid_to),
                 'amount': inv.paid_amount,
-                'singles': [{
-                    'account':  getAccountNumber(item.paid_to),
-                    'amount': inv.paid_amount,
-                    'currency': inv.paid_to_account_currency
-                }],
-                'debit_credit': 'C',
-                'date': datetime.datetime.now(),
-                'currency': inv.paid_from_account_currency,
-                'tax_account': None,
-                'tax_amount': None,
-                'tax_rate': None,
-                'tax_code': None,
-                'text1': inv.name
-            })
+                'currency': inv.paid_to_account_currency
+            }],
+            'debit_credit': 'C',
+            'date': datetime.datetime.now(),
+            'currency': inv.paid_from_account_currency,
+            'tax_account': None,
+            'tax_amount': None,
+            'tax_rate': None,
+            'tax_code': None,
+            'text1': inv.name
+        })
 
-    return transactions
+    # Journal Entry
+
+    journalEntry = frappe.get_list('Journal Entry', filters={
+        'posting_date': ['>=', '08-09-2021']
+    })
+
+    for invoice in journalEntry:
+        inv = frappe.get_doc('Journal Entry', invoice.name)
+
+        if inv.accounts[0].debit_in_account_currency != 0:
+            debit_credit = "D"
+            amount = inv.accounts[0].debit_in_account_currency
+        else:
+            debit_credit = "C"
+            amount = inv.accounts[0].credit_in_account_currency
+            # create content
+        transaction = {
+            'account': getAccountNumber(inv.accounts[0].account),
+            'amount': amount,
+            'against_singles': [],
+            'debit_credit': debit_credit,
+            'date': inv.posting_date,
+            'currency': inv.accounts[0].account_currency,
+            'tax_account': None,
+            'tax_amount': None,
+            'tax_rate': None,
+            'tax_code': None,
+            'text1': cgi.escape(inv.name)
+        }
+        if inv.multi_currency == 1:
+            transaction['exchange_rate'] = inv.accounts[0].exchange_rate
+            transaction['key_currency'] = inv.accounts[0].account_currency
+        else:
+            transaction['key_currency'] = inv.accounts[0].account_currency
+
+        for i in range(1, len(inv.accounts), 1):
+            if debit_credit == "D":
+                amount = inv.accounts[i].credit_in_account_currency - \
+                    inv.accounts[i].debit_in_account_currency
+            else:
+                amount = inv.accounts[i].debit_in_account_currency - \
+                    inv.accounts[i].credit_in_account_currency
+            transaction_single = {
+                'account': getAccountNumber(inv.accounts[i].account),
+                'amount': amount,
+                'currency': inv.accounts[i].account_currency
+            }
+            if inv.multi_currency == 1:
+                transaction_single['exchange_rate'] = inv.accounts[i].exchange_rate
+                transaction_single['key_currency'] = inv.accounts[i].account_currency
+            transaction['against_singles'].append(transaction_single)
+        transactions.append(transaction)
+
+    data = {
+        'transactions': transactions
+    }
+
+    content = frappe.render_template(
+        path.join(path.dirname(__file__), 'abacus.html'), data)
+
+    return {'content': content}
 
 
 def getAccountNumber(account_name):
