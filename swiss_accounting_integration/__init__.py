@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import frappe
-import datetime
 import cgi
 from werkzeug.wrappers import Response
 
