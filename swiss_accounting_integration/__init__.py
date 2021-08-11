@@ -136,7 +136,7 @@ def gl(company):
         else:
             debit_credit = "C"
             amount = inv.accounts[0].credit_in_account_currency
-            # create content
+
         transaction = {
             'account': getAccountNumber(inv.accounts[0].account),
             'amount': amount,
@@ -158,17 +158,20 @@ def gl(company):
             transaction['key_currency'] = inv.accounts[0].account_currency
 
         for i in range(1, len(inv.accounts), 1):
+
             if debit_credit == "D":
                 amount = inv.accounts[i].credit_in_account_currency - \
                     inv.accounts[i].debit_in_account_currency
             else:
                 amount = inv.accounts[i].debit_in_account_currency - \
                     inv.accounts[i].credit_in_account_currency
+
             transaction_single = {
                 'account': getAccountNumber(inv.accounts[i].account),
                 'amount': amount,
                 'currency': inv.accounts[i].account_currency
             }
+
             if inv.multi_currency == 1:
                 transaction_single['exchange_rate'] = inv.accounts[i].exchange_rate
                 transaction_single['key_currency'] = inv.accounts[i].account_currency
