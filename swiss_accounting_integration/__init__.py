@@ -14,13 +14,10 @@ def gl(company):
     Abacus XML
     """
 
-    # Transactions
     transactions = []
 
-    # Base Currency
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
 
-    # Invoice
     invoices = docs('Sales Invoice')
 
     for invoice in invoices:
