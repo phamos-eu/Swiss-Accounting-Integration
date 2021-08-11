@@ -2,8 +2,6 @@
 from __future__ import unicode_literals
 
 import frappe
-from .utils import get_aggregated_transaction, get_individual_transation
-import frappe
 import datetime
 import cgi
 from werkzeug.wrappers import Response
@@ -12,9 +10,9 @@ __version__ = '0.0.1'
 
 
 @frappe.whitelist()
-def gl2():
+def gl():
     """
-    Aggregation Not Working
+    Abacus XML 
     """
 
     transactions = []
