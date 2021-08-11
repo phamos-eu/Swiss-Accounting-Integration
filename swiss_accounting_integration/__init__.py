@@ -12,7 +12,7 @@ __version__ = '0.0.1'
 @frappe.whitelist()
 def gl():
     """
-    Abacus XML 
+    Abacus XML
     """
 
     transactions = []
@@ -102,7 +102,7 @@ def gl():
 
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
-        transactions.append({
+        transaction = {
             'account': getAccountNumber(inv.paid_from),
             'amount': inv.paid_amount,
             'against_singles': [{
@@ -119,7 +119,16 @@ def gl():
             'tax_rate': None,
             'tax_code': None,
             'text1': inv.name
-        })
+        }
+
+        for deduction in inv.deductions:
+            transaction['against_singles'].append({
+                'account': getAccountNumber(deduction.account),
+                'amount': deduction.amount,
+                'currency': inv.paid_to_account_currency
+            })
+
+        transactions.append(transaction)
 
     # Journal Entry
 
