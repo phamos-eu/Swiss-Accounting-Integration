@@ -46,7 +46,7 @@ def gl(company):
                     'currency': inv.currency
                 }],
                 'debit_credit': 'D',
-                'date': datetime.datetime.now(),
+                'date': inv.posting_date,
                 'currency': inv.currency,
                 'exchange_rate': inv.conversion_rate,
                 'tax_account':   getAccountNumber(taxAccount) or None,
@@ -82,7 +82,7 @@ def gl(company):
                     'currency': inv.currency
                 }],
                 'debit_credit': 'C',
-                'date': datetime.datetime.now(),
+                'date': inv.posting_date,
                 'currency': inv.currency,
                 'exchange_rate': inv.conversion_rate,
                 'tax_account':   getAccountNumber(taxAccount) or None,
@@ -108,7 +108,7 @@ def gl(company):
                 'currency': inv.paid_to_account_currency
             }],
             'debit_credit': 'C',
-            'date': datetime.datetime.now(),
+            'date': inv.posting_date,
             'exchange_rate': inv.source_exchange_rate,
             'currency': inv.paid_from_account_currency,
             'tax_account': None,
@@ -147,7 +147,6 @@ def gl(company):
             'against_singles': [],
             'debit_credit': debit_credit,
             'date': inv.posting_date,
-
             'currency': inv.accounts[0].account_currency,
             'tax_account': None,
             'tax_amount': None,
