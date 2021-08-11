@@ -10,14 +10,12 @@ __version__ = '0.0.1'
 
 
 @frappe.whitelist()
-def gl():
+def gl(company):
     """
     Abacus XML
     """
 
     transactions = []
-    # TODO: Get Currency From Options
-    company = 'Grynn Advanced'
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
 
     invoices = docs('Sales Invoice')
