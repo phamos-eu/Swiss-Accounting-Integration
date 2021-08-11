@@ -6,7 +6,6 @@ from .utils import get_aggregated_transaction, get_individual_transation
 import frappe
 import datetime
 import cgi
-from os import path
 from werkzeug.wrappers import Response
 
 __version__ = '0.0.1'
