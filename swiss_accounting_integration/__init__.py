@@ -20,9 +20,7 @@ def gl():
     company = 'Grynn Advanced'
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
 
-    invoices = frappe.get_list('Sales Invoice', filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    invoices = docs('Sales Invoice')
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
@@ -58,9 +56,7 @@ def gl():
 
     # Purchase Invoice
 
-    purchaseInvoices = frappe.get_list('Purchase Invoice', filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    purchaseInvoices = docs('Purchase Invoice')
 
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
@@ -96,9 +92,7 @@ def gl():
 
     # Payment Entry
 
-    paymentEntry = frappe.get_list('Payment Entry', filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    paymentEntry = docs('Payment Entry')
 
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
@@ -132,9 +126,7 @@ def gl():
 
     # Journal Entry
 
-    journalEntry = frappe.get_list('Journal Entry', filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    journalEntry = docs('Journal Entry')
 
     for invoice in journalEntry:
         inv = frappe.get_doc('Journal Entry', invoice.name)
@@ -210,3 +202,9 @@ def getAccountNumber(account_name):
         return frappe.get_value('Account', account_name, 'account_number')
     else:
         return None
+
+
+def docs(doc):
+    return frappe.get_list(doc, filters={
+        'posting_date': ['>=', '08-09-2021']
+    })
