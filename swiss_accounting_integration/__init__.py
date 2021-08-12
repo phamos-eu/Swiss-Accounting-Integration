@@ -46,7 +46,6 @@ def gl(company, start_date, end_date):
         }
 
         for item in inv.items:
-
             invoice['against_singles'].append(
                 {
                     'account':  getAccountNumber(item.income_account),
