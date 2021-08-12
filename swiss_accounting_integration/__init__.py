@@ -185,8 +185,6 @@ def gl(company):
     content = frappe.render_template('abacus.html', data)
 
     return content
-    # Response
-    # return get_xml(content)
 
 
 def getAccountNumber(account_name):
@@ -207,16 +205,17 @@ def docs(doc):
     })
 
 
-# def get_xml(content):
-#     """
-#     Create XML Response
-#     """
-#     resp = Response()
-#     resp.mimetype = 'text/xml'
-#     resp.charset = 'utf-8'
-#     resp.data = content
+def get_xml(content):
+    """
+    Create XML Response
+    """
+    resp = Response()
+    resp.mimetype = 'text/xml'
+    resp.charset = 'utf-8'
+    resp.data = content
 
-#     return resp
+    return resp
+
 
 def attach_xml(doc, event=None):
     print('is calling')
