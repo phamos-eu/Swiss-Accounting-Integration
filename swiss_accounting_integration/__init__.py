@@ -15,9 +15,9 @@ def gl(company, start_date, end_date):
     """
 
     transactions = []
+    invoices = []
 
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
-
     invoices = docs('Sales Invoice', start_date, end_date)
 
     for invoice in invoices:
@@ -31,6 +31,26 @@ def gl(company, start_date, end_date):
             taxAccount = tax_record.taxes[0].account_head
         else:
             tax_code = None
+
+        invoice = {
+            'account': getAccountNumber(inv.debit_to),
+            'amount': inv.base_grand_total,
+            'against_singles': [{
+                'account':  getAccountNumber(item.income_account),
+                'amount': inv.base_net_total,
+                'currency': inv.currency
+            }],
+            'debit_credit': 'D',
+            'date': inv.posting_date,
+            'currency': inv.currency,
+            'exchange_rate': inv.conversion_rate,
+            'tax_account':   getAccountNumber(taxAccount) or None,
+            'tax_amount': inv.total_taxes_and_charges or None,
+            'tax_rate': rate or None,
+            'tax_code': tax_code or "312",
+            'tax_currency': baseCurrency,
+            'text1': inv.name
+        }
 
         for item in inv.items:
             transactions.append({
@@ -179,6 +199,7 @@ def gl(company, start_date, end_date):
         transactions.append(transaction)
 
     data = {
+        'invoices': [],
         'transactions': transactions
     }
 
