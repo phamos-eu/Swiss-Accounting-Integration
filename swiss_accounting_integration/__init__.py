@@ -9,7 +9,7 @@ from werkzeug.wrappers import Response
 __version__ = '0.0.1'
 
 
-def gl(company):
+def gl(company, start_date, end_date):
     """
     Abacus XML
     """
@@ -18,7 +18,7 @@ def gl(company):
 
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
 
-    invoices = docs('Sales Invoice')
+    invoices = docs('Sales Invoice', start_date, end_date)
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
@@ -55,7 +55,7 @@ def gl(company):
 
     # Purchase Invoice
 
-    purchaseInvoices = docs('Purchase Invoice')
+    purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
 
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
@@ -91,7 +91,7 @@ def gl(company):
 
     # Payment Entry
 
-    paymentEntry = docs('Payment Entry')
+    paymentEntry = docs('Payment Entry', start_date, end_date)
 
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
@@ -125,7 +125,7 @@ def gl(company):
 
     # Journal Entry
 
-    journalEntry = docs('Journal Entry')
+    journalEntry = docs('Journal Entry', start_date, end_date)
 
     for invoice in journalEntry:
         inv = frappe.get_doc('Journal Entry', invoice.name)
@@ -198,11 +198,11 @@ def getAccountNumber(account_name):
         return None
 
 
-def docs(doc):
+def docs(doc, start, end):
     "Get Docs"
-    return frappe.get_list(doc, filters={
-        'posting_date': ['>=', '08-09-2021']
-    })
+    return frappe.get_list(doc, filters=[[
+        'posting_date', 'between', [start, end]
+    ]])
 
 
 def get_xml(content):
@@ -218,6 +218,5 @@ def get_xml(content):
 
 
 def attach_xml(doc, event=None):
-    print('is calling')
-    save_file('abacus.xml', gl('Grynn Advanced'),
+    save_file('abacus.xml', gl(doc.company, doc.start_date, doc.end_date),
               doc.doctype, doc.name, is_private=True)
