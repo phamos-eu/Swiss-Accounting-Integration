@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "export_name",
+  "company",
   "start_date",
   "end_date"
  ],
@@ -32,11 +33,18 @@
    "in_list_view": 1,
    "label": "End Date",
    "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-11 22:48:08.138044",
+ "modified": "2021-08-12 00:09:01.915227",
  "modified_by": "Administrator",
  "module": "Abacus Exports",
  "name": "Abacus Export",
