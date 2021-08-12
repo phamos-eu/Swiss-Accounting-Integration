@@ -15,13 +15,15 @@ def gl(company, start_date, end_date):
     """
 
     transactions = []
-    invoices = []
+    doc_invoices = []
 
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
     invoices = docs('Sales Invoice', start_date, end_date)
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
+
+        taxes = getattr(inv, 'taxes', None)
 
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
@@ -35,11 +37,7 @@ def gl(company, start_date, end_date):
         invoice = {
             'account': getAccountNumber(inv.debit_to),
             'amount': inv.base_grand_total,
-            'against_singles': [{
-                'account':  getAccountNumber(item.income_account),
-                'amount': inv.base_net_total,
-                'currency': inv.currency
-            }],
+            'against_singles': [],
             'debit_credit': 'D',
             'date': inv.posting_date,
             'currency': inv.currency,
@@ -53,26 +51,15 @@ def gl(company, start_date, end_date):
         }
 
         for item in inv.items:
-            transactions.append({
-                'account': getAccountNumber(inv.debit_to),
-                'amount': inv.base_grand_total,
-                'against_singles': [{
+
+            invoice['against_singles'].append(
+                {
                     'account':  getAccountNumber(item.income_account),
                     'amount': inv.base_net_total,
                     'currency': inv.currency
-                }],
-                'debit_credit': 'D',
-                'date': inv.posting_date,
-                'currency': inv.currency,
-                'exchange_rate': inv.conversion_rate,
-                'tax_account':   getAccountNumber(taxAccount) or None,
-                'tax_amount': inv.total_taxes_and_charges or None,
-                'tax_rate': rate or None,
-                'tax_code': tax_code or "312",
-                'tax_currency': baseCurrency,
-                'text1': inv.name
-            })
-
+                }
+            )
+        doc_invoices.append(invoice)
     # Purchase Invoice
 
     purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
@@ -199,7 +186,7 @@ def gl(company, start_date, end_date):
         transactions.append(transaction)
 
     data = {
-        'invoices': [],
+        'invoices': doc_invoices,
         'transactions': transactions
     }
 
