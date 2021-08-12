@@ -23,8 +23,6 @@ def gl(company, start_date, end_date):
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
-        taxes = getattr(inv, 'taxes', None)
-
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
                 "Sales Taxes and Charges Template", inv.taxes_and_charges)
@@ -33,6 +31,8 @@ def gl(company, start_date, end_date):
             taxAccount = tax_record.taxes[0].account_head
         else:
             tax_code = None
+            rate = 0
+            taxAccount = None
 
         invoice = {
             'account': getAccountNumber(inv.debit_to),
@@ -42,11 +42,6 @@ def gl(company, start_date, end_date):
             'date': inv.posting_date,
             'currency': inv.currency,
             'exchange_rate': inv.conversion_rate,
-            'tax_account':   getAccountNumber(taxAccount) or None,
-            'tax_amount': inv.total_taxes_and_charges or None,
-            'tax_rate': rate or None,
-            'tax_code': tax_code or "312",
-            'tax_currency': baseCurrency,
             'text1': inv.name
         }
 
@@ -55,8 +50,13 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(
                 {
                     'account':  getAccountNumber(item.income_account),
-                    'amount': inv.base_net_total,
-                    'currency': inv.currency
+                    'amount': item.base_amount + (item.base_amount * rate / 100),
+                    'currency': inv.currency,
+                    'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
+                    'tax_amount': item.base_amount * rate / 100,
+                    'tax_rate': rate or None,
+                    'tax_code': tax_code or "312",
+                    'tax_currency': baseCurrency,
                 }
             )
         doc_invoices.append(invoice)
