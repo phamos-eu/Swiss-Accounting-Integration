@@ -77,20 +77,20 @@
                     <Text1>{{ transaction.text1 }}</Text1>
                     <DocumentNumber>{{ short_reference }}</DocumentNumber>
                     <SelectionCode></SelectionCode>
-                    {%- if transaction.tax_account %}
+                    {%- if against.tax_account %}
                     <TaxData mode="SAVE">
                         <TaxIncluded>I</TaxIncluded>
                         <TaxType>1</TaxType>
                         <UseCode>1</UseCode>
                         <AmountData mode="SAVE">
-                            <Currency>{{ transaction.tax_currency }}</Currency>
+                            <Currency>{{ against.tax_currency }}</Currency>
                             <Amount>0</Amount>
                         </AmountData>
-                        <KeyAmount>{{ "{:.2f}".format(((transaction.tax_amount or 0) * (-1))) }}</KeyAmount>
-                        <TaxRate>{{ transaction.tax_rate or 0 }}</TaxRate>
+                        <KeyAmount>{{ "{:.2f}".format(((against.tax_amount or 0) * (-1))) }}</KeyAmount>
+                        <TaxRate>{{ against.tax_rate or 0 }}</TaxRate>
                         <TaxCoefficient>100</TaxCoefficient>
                         <Country>CH</Country>
-                        <TaxCode>{{ transaction.tax_code }}</TaxCode>
+                        <TaxCode>{{ against.tax_code }}</TaxCode>
                         <Number></Number>
                         <FlatRate>0</FlatRate>
                     </TaxData>
