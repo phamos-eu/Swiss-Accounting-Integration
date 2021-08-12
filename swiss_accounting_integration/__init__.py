@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 import frappe
 import cgi
+from frappe.utils.file_manager import save_file
 from werkzeug.wrappers import Response
 
 __version__ = '0.0.1'
 
 
-@frappe.whitelist()
 def gl(company):
     """
     Abacus XML
@@ -184,8 +184,9 @@ def gl(company):
 
     content = frappe.render_template('abacus.html', data)
 
+    return content
     # Response
-    return get_xml(content)
+    # return get_xml(content)
 
 
 def getAccountNumber(account_name):
@@ -206,13 +207,18 @@ def docs(doc):
     })
 
 
-def get_xml(content):
-    """
-    Create XML Response
-    """
-    resp = Response()
-    resp.mimetype = 'text/xml'
-    resp.charset = 'utf-8'
-    resp.data = content
+# def get_xml(content):
+#     """
+#     Create XML Response
+#     """
+#     resp = Response()
+#     resp.mimetype = 'text/xml'
+#     resp.charset = 'utf-8'
+#     resp.data = content
 
-    return resp
+#     return resp
+
+def attach_xml(doc, event=None):
+    print('is calling')
+    save_file('abacus.xml', gl('Grynn Advanced'),
+              doc.doctype, doc.name, is_private=True)
