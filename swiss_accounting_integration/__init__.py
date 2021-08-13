@@ -77,6 +77,21 @@ def gl(company, start_date, end_date):
                     'tax_currency': baseCurrency,
                 }
             )
+
+        for tax in inv.taxes:
+            if is_expense(tax.item_wise_tax_detail):
+                for item in get_expenses():
+                    invoice['against_singles'].append({
+                        'account':  getAccountNumber(item.account),
+                        'amount': item.amount,
+                        'currency': inv.currency,
+                        'tax_account':   None,
+                        'tax_amount': None,
+                        'tax_rate':  None,
+                        'tax_code': None,
+                        'tax_currency': None,
+                    })
+
         doc_invoices.append(invoice)
 
     # Purchase Invoice
