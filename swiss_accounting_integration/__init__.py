@@ -80,10 +80,10 @@ def gl(company, start_date, end_date):
 
         for tax in inv.taxes:
             if is_expense(tax.item_wise_tax_detail):
-                for item in get_expenses():
+                for item in get_expenses(tax):
                     invoice['against_singles'].append({
-                        'account':  getAccountNumber(item.account),
-                        'amount': item.amount,
+                        'account':  getAccountNumber(item['account']),
+                        'amount': item['amount'],
                         'currency': inv.currency,
                         'tax_account':   None,
                         'tax_amount': None,
