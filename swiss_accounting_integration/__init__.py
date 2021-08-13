@@ -4,8 +4,7 @@ from __future__ import unicode_literals
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
-from werkzeug.wrappers import Response
-from .utils import is_expense, get_expenses
+from .utils import is_expense, get_expenses, getAccountNumber, docs
 
 __version__ = '0.0.2'
 
@@ -226,35 +225,6 @@ def gl(company, start_date, end_date):
     content = frappe.render_template('abacus.html', data)
 
     return content
-
-
-def getAccountNumber(account_name):
-    """
-    Get Account Number
-    or None
-    """
-    if account_name:
-        return frappe.get_value('Account', account_name, 'account_number')
-    else:
-        return None
-
-
-def docs(doc, start, end):
-    "Get Docs"
-    return frappe.get_list(doc, filters=[[
-        'posting_date', 'between', [start, end]
-    ], ['docstatus', '=', 1]])
-
-
-def get_xml(content):
-    """
-    Create XML Response
-    """
-    resp = Response()
-    resp.mimetype = 'text/xml'
-    resp.charset = 'utf-8'
-    resp.data = content
-    return resp
 
 
 def attach_xml(doc, event=None):
