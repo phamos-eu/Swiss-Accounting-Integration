@@ -23,9 +23,6 @@ def gl(company, start_date, end_date):
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
-        # TODO: rounding Adjustments
-        #
-
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
                 "Sales Taxes and Charges Template", inv.taxes_and_charges)
@@ -80,8 +77,8 @@ def gl(company, start_date, end_date):
                 }
             )
         doc_invoices.append(invoice)
-    # Purchase Invoice
 
+    # Purchase Invoice
     purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
 
     for invoice in purchaseInvoices:
@@ -261,6 +258,7 @@ def is_expense(txt):
 
 def get_expenses(tax):
     """
+    Get Expenses from tax
     """
     items = []
     js = json.loads(tax.item_wise_tax_detail)
