@@ -102,7 +102,7 @@ def gl(company, start_date, end_date):
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
                 "Sales Taxes and Charges Template", inv.taxes_and_charges)
-            tax_code = 312  # tax_record.tax_code
+            tax_code = getattr(tax_record, 'tax_code', 312)
             rate = tax_record.taxes[0].rate
             taxAccount = tax_record.taxes[0].account_head
         else:
