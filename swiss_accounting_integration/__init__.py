@@ -122,7 +122,7 @@ def gl(company, start_date, end_date):
                 'date': inv.posting_date,
                 'currency': inv.currency,
                 'exchange_rate': inv.conversion_rate,
-                'tax_account':   getAccountNumber(taxAccount) or None,
+                'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
                 'tax_amount': inv.total_taxes_and_charges or None,
                 'tax_rate': rate or None,
                 'tax_code': tax_code or "312",
