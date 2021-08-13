@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
