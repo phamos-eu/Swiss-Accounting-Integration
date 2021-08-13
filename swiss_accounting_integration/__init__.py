@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
-from .utils import is_expense, get_expenses, getAccountNumber, docs, data
+from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes
 
 __version__ = '0.0.2'
 
@@ -17,7 +17,6 @@ def gl(company, start_date, end_date):
     doc_invoices = []
 
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
-
     invoices = docs('Sales Invoice', start_date, end_date)
     purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
     paymentEntry = docs('Payment Entry', start_date, end_date)
@@ -26,16 +25,7 @@ def gl(company, start_date, end_date):
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
-        if inv.taxes_and_charges:
-            tax_record = frappe.get_doc(
-                "Sales Taxes and Charges Template", inv.taxes_and_charges)
-            tax_code = getattr(tax_record, 'tax_code', 312)
-            rate = tax_record.taxes[0].rate
-            taxAccount = tax_record.taxes[0].account_head
-        else:
-            tax_code = None
-            rate = 0
-            taxAccount = None
+        tax_code, taxAccount, rate = taxes(inv)
 
         invoice = {
             'account': getAccountNumber(inv.debit_to),
@@ -52,6 +42,7 @@ def gl(company, start_date, end_date):
 
         if inv.rounding_adjustment:
             company = inv.company
+
             roundingAccount = frappe.get_doc(
                 'Company', company).round_off_account
 
@@ -67,6 +58,7 @@ def gl(company, start_date, end_date):
             })
 
         for item in inv.items:
+
             invoice['against_singles'].append(
                 {
                     'account':  getAccountNumber(item.income_account),
@@ -100,16 +92,8 @@ def gl(company, start_date, end_date):
 
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
-        if inv.taxes_and_charges:
-            tax_record = frappe.get_doc(
-                "Sales Taxes and Charges Template", inv.taxes_and_charges)
-            tax_code = getattr(tax_record, 'tax_code', 312)
-            rate = tax_record.taxes[0].rate
-            taxAccount = tax_record.taxes[0].account_head
-        else:
-            tax_code = None
-            taxAccount = None
-            rate = 0
+
+        tax_code, taxAccount, rate = taxes(inv)
 
         for item in inv.items:
             transactions.append({
