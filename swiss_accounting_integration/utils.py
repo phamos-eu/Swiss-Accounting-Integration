@@ -58,3 +58,13 @@ def get_xml(content):
     resp.charset = 'utf-8'
     resp.data = content
     return resp
+
+
+def data(invoices, transactions):
+    """
+    Build Data
+    """
+    return {
+        'invoices': invoices,
+        'transactions': transactions
+    }
