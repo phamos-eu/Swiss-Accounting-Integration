@@ -254,7 +254,6 @@ def get_xml(content):
     resp.mimetype = 'text/xml'
     resp.charset = 'utf-8'
     resp.data = content
-
     return resp
 
 
