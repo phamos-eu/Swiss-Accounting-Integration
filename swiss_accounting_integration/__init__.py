@@ -39,7 +39,7 @@ def gl(company, start_date, end_date):
 
         invoice = {
             'account': getAccountNumber(inv.debit_to),
-            'amount': inv.base_grand_total,
+            'amount': inv.base_rounded_total,
             'against_singles': [],
             'debit_credit': 'D',
             'date': inv.posting_date,
@@ -47,6 +47,24 @@ def gl(company, start_date, end_date):
             'exchange_rate': inv.conversion_rate,
             'text1': inv.name
         }
+
+        # Round Off Account
+
+        if inv.rounding_adjustment:
+            company = inv.company
+            roundingAccount = frappe.get_doc(
+                'Company', company).round_off_account
+
+            invoice['against_singles'].append({
+                'account':  getAccountNumber(roundingAccount),
+                'amount': inv.rounding_adjustment,
+                'currency': inv.currency,
+                'tax_account':   None,
+                'tax_amount': None,
+                'tax_rate':  None,
+                'tax_code': None,
+                'tax_currency': None,
+            })
 
         for item in inv.items:
             invoice['against_singles'].append(
