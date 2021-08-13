@@ -23,6 +23,9 @@ def gl(company, start_date, end_date):
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
+        # TODO: rounding Adjustments
+        #
+
         if inv.taxes_and_charges:
             tax_record = frappe.get_doc(
                 "Sales Taxes and Charges Template", inv.taxes_and_charges)
@@ -209,7 +212,7 @@ def docs(doc, start, end):
     "Get Docs"
     return frappe.get_list(doc, filters=[[
         'posting_date', 'between', [start, end]
-    ]])
+    ], ['docstatus', '=', 1]])
 
 
 def get_xml(content):
