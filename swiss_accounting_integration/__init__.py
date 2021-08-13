@@ -68,10 +68,10 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(
                 {
                     'account':  getAccountNumber(item.income_account),
-                    'amount': item.base_amount + (item.base_amount * rate / 100),
+                    'amount': item.net_amount + (item.net_amount * rate / 100),
                     'currency': inv.currency,
                     'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
-                    'tax_amount': item.base_amount * rate / 100,
+                    'tax_amount': item.net_amount * rate / 100,
                     'tax_rate': rate or None,
                     'tax_code': tax_code or "312",
                     'tax_currency': baseCurrency,
