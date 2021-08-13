@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
-from .utils import is_expense, get_expenses, getAccountNumber, docs
+from .utils import is_expense, get_expenses, getAccountNumber, docs, data
 
 __version__ = '0.0.2'
 
@@ -217,12 +217,7 @@ def gl(company, start_date, end_date):
             transaction['against_singles'].append(transaction_single)
         transactions.append(transaction)
 
-    data = {
-        'invoices': doc_invoices,
-        'transactions': transactions
-    }
-
-    return frappe.render_template('abacus.html', data)
+    return frappe.render_template('abacus.html', data(doc_invoices, transactions))
 
 
 def attach_xml(doc, event=None):
