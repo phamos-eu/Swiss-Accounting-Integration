@@ -258,5 +258,8 @@ def get_xml(content):
 
 
 def attach_xml(doc, event=None):
+    """
+    Attach XML File to Doctype
+    """
     save_file('abacus.xml', gl(doc.company, doc.start_date, doc.end_date),
               doc.doctype, doc.name, is_private=True)
