@@ -248,3 +248,15 @@ def get_xml(content):
 def attach_xml(doc, event=None):
     save_file('abacus.xml', gl(doc.company, doc.start_date, doc.end_date),
               doc.doctype, doc.name, is_private=True)
+def get_expenses(tax):
+    """
+    """
+    items = []
+    js = json.loads(tax.item_wise_tax_detail)
+    values = js.values()
+    for item in values:
+        items.append({
+            'account': tax.account_head,
+            'amount': item[1]
+        })
+    return items
