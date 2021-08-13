@@ -18,7 +18,11 @@ def gl(company, start_date, end_date):
     doc_invoices = []
 
     baseCurrency = frappe.get_value('Company', company, 'default_currency')
+
     invoices = docs('Sales Invoice', start_date, end_date)
+    purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
+    paymentEntry = docs('Payment Entry', start_date, end_date)
+    journalEntry = docs('Journal Entry', start_date, end_date)
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
@@ -94,7 +98,6 @@ def gl(company, start_date, end_date):
         doc_invoices.append(invoice)
 
     # Purchase Invoice
-    purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
 
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
@@ -130,8 +133,6 @@ def gl(company, start_date, end_date):
 
     # Payment Entry
 
-    paymentEntry = docs('Payment Entry', start_date, end_date)
-
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
         transaction = {
@@ -163,8 +164,6 @@ def gl(company, start_date, end_date):
         transactions.append(transaction)
 
     # Journal Entry
-
-    journalEntry = docs('Journal Entry', start_date, end_date)
 
     for invoice in journalEntry:
         inv = frappe.get_doc('Journal Entry', invoice.name)
