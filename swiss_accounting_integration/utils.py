@@ -68,3 +68,17 @@ def data(invoices, transactions):
         'invoices': invoices,
         'transactions': transactions
     }
+
+
+def taxes(inv):
+    if inv.taxes_and_charges:
+        tax_record = frappe.get_doc(
+            "Sales Taxes and Charges Template", inv.taxes_and_charges)
+        tax_code = getattr(tax_record, 'tax_code', 312)
+        rate = tax_record.taxes[0].rate
+        taxAccount = tax_record.taxes[0].account_head
+    else:
+        tax_code = None
+        taxAccount = None
+        rate = 0
+    return [tax_code, taxAccount, rate]
