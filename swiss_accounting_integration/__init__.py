@@ -220,9 +220,7 @@ def gl(company, start_date, end_date):
         'transactions': transactions
     }
 
-    content = frappe.render_template('abacus.html', data)
-
-    return content
+    return frappe.render_template('abacus.html', data)
 
 
 def attach_xml(doc, event=None):
