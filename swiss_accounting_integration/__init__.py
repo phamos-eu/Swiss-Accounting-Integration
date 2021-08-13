@@ -108,6 +108,8 @@ def gl(company, start_date, end_date):
             taxAccount = tax_record.taxes[0].account_head
         else:
             tax_code = None
+            taxAccount = None
+            rate = 0
 
         for item in inv.items:
             transactions.append({
