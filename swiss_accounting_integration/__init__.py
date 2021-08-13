@@ -248,6 +248,17 @@ def get_xml(content):
 def attach_xml(doc, event=None):
     save_file('abacus.xml', gl(doc.company, doc.start_date, doc.end_date),
               doc.doctype, doc.name, is_private=True)
+
+
+def is_expense(txt):
+    """
+    Check Weather Entry in Tax
+    is Expense or Not 
+    """
+    js = json.loads(txt)
+    return int(js.values()[0][0]) == 0
+
+
 def get_expenses(tax):
     """
     """
