@@ -7,7 +7,10 @@ def is_expense(txt):
     is Expense or Not 
     """
     js = json.loads(txt)
-    return int(js.values()[0][0]) == 0
+    values = js.values()
+    for value in values:
+        tax = value[0]
+        return int(tax) == 0
 
 
 def get_expenses(tax):
