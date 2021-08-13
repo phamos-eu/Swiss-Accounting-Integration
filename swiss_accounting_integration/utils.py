@@ -7,7 +7,7 @@ import frappe
 def is_expense(txt):
     """
     Check Weather Entry in Tax
-    is Expense or Not 
+    is Expense or Not
     """
     js = json.loads(txt)
     values = js.values()
