@@ -7,7 +7,7 @@ from frappe.utils.file_manager import save_file
 from werkzeug.wrappers import Response
 from .utils import is_expense, get_expenses
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 def gl(company, start_date, end_date):
