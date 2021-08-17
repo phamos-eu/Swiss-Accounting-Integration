@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
-from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes
+from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes, rounding_off
 
 __version__ = '0.0.2'
 
@@ -39,23 +39,10 @@ def gl(company, start_date, end_date):
         }
 
         # Round Off Account
+        rounding_adjustment = rounding_off(inv)
 
-        if inv.rounding_adjustment:
-            company = inv.company
-
-            roundingAccount = frappe.get_doc(
-                'Company', company).round_off_account
-
-            invoice['against_singles'].append({
-                'account':  getAccountNumber(roundingAccount),
-                'amount': inv.rounding_adjustment,
-                'currency': inv.currency,
-                'tax_account':   None,
-                'tax_amount': None,
-                'tax_rate':  None,
-                'tax_code': None,
-                'tax_currency': None,
-            })
+        if rounding_adjustment:
+            invoice['against_singles'].append(rounding_adjustment)
 
         for item in inv.items:
 
