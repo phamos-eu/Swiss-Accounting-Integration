@@ -82,3 +82,28 @@ def taxes(inv):
         taxAccount = None
         rate = 0
     return [tax_code, taxAccount, rate]
+
+
+def rounding_off(inv):
+    """
+    Rounding Off Amount
+    """
+    if inv.rounding_adjustment:
+
+        company = inv.company
+
+        roundingAccount = frappe.get_doc(
+            'Company', company).round_off_account
+
+        return {
+            'account':  getAccountNumber(roundingAccount),
+            'amount': inv.rounding_adjustment,
+            'currency': inv.currency,
+            'tax_account':   None,
+            'tax_amount': None,
+            'tax_rate':  None,
+            'tax_code': None,
+            'tax_currency': None,
+        }
+    else:
+        return None
