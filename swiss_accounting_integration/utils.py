@@ -126,7 +126,7 @@ def document_number(inv_name):
     return ''.join(num)
 
 
-def invoice(inv, account_number, debit_credit, key_currency):
+def invoice(inv, account_name,  debit_credit, key_currency):
     """
     For consistent Invoice
     """
