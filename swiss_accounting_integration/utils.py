@@ -127,6 +127,9 @@ def document_number(inv_name):
 
 
 def invoice(inv, account_number, debit_credit, key_currency):
+    """
+    For consistent Invoice
+    """
     return {
         'account': getAccountNumber(account_number),
         'amount': round(inv.rounded_total, 2),
