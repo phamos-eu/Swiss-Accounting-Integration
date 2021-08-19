@@ -100,7 +100,7 @@ def gl(company, start_date, end_date):
                     })
 
         doc_invoices.append(invoice)
-    print(doc_invoices)
+
     # Payment Entry
 
     for invoice in paymentEntry:
