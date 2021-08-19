@@ -70,10 +70,15 @@ def data(invoices, transactions):
     }
 
 
-def taxes(inv):
+def taxes(template, inv):
+    """
+    Taxes
+    -----
+    Get Taxes if Any
+    """
     if inv.taxes_and_charges:
-        tax_record = frappe.get_doc(
-            "Sales Taxes and Charges Template", inv.taxes_and_charges)
+
+        tax_record = frappe.get_doc(template, inv.taxes_and_charges)
         tax_code = getattr(tax_record, 'tax_code', 312)
         rate = tax_record.taxes[0].rate
         taxAccount = tax_record.taxes[0].account_head
