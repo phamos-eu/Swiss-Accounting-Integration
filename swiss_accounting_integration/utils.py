@@ -143,6 +143,9 @@ def invoice(inv, account_number, debit_credit, key_currency):
 
 
 def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_currency):
+    """
+    Amount: for items
+    """
     return {
         'account':  getAccountNumber(income_account),
         'amount': round(item.net_amount + (item.net_amount * rate / 100), 2),
