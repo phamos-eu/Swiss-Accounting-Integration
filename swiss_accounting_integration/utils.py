@@ -107,3 +107,16 @@ def rounding_off(inv):
         }
     else:
         return None
+
+def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_currency):
+    return {
+        'account':  getAccountNumber(income_account),
+        'amount': round(item.net_amount + (item.net_amount * rate / 100), 2),
+        'keyamount': round(item.base_net_amount + (item.base_net_amount * rate / 100), 2),
+        'currency': inv_currency,
+        'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
+        'tax_amount': item.base_net_amount * rate / 100,
+        'tax_rate': rate or None,
+        'tax_code': code or "312",
+        'tax_currency': tax_currency,
+    }
