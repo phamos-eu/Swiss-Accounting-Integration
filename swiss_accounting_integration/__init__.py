@@ -38,21 +38,14 @@ def gl(company, start_date, end_date):
         if rounding_adjustment:
             invoice['against_singles'].append(rounding_adjustment)
 
+        # Items
         for item in inv.items:
-
             invoice['against_singles'].append(
-                {
-                    'account':  getAccountNumber(item.income_account),
-                    'amount': item.net_amount + (item.net_amount * rate / 100),
-                    'currency': inv.currency,
-                    'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
-                    'tax_amount': item.net_amount * rate / 100,
-                    'tax_rate': rate or None,
-                    'tax_code': tax_code or "312",
-                    'tax_currency': baseCurrency,
-                }
+                inv_amt(item, item.income_account, inv.currency,
+                        taxAccount, rate, tax_code, currency)
             )
 
+        # Taxes
         for tax in inv.taxes:
             if is_expense(tax.item_wise_tax_detail):
                 for item in get_expenses(tax):
