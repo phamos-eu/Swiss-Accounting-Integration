@@ -108,6 +108,23 @@ def rounding_off(inv):
     else:
         return None
 
+
+def invoice(inv, account_number, debit_credit, key_currency):
+    return {
+        'account': getAccountNumber(account_number),
+        'amount': round(inv.rounded_total, 2),
+        'key_amount': round(inv.base_rounded_total, 2),
+        'against_singles': [],
+        'debit_credit': debit_credit,
+        'date': inv.posting_date,
+        'currency': inv.currency,
+        'key_currency': key_currency,
+        'exchange_rate': inv.conversion_rate,
+        'text1': inv.name,
+        'document_number': document_number(inv.name)
+    }
+
+
 def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_currency):
     return {
         'account':  getAccountNumber(income_account),
