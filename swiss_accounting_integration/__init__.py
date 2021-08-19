@@ -16,11 +16,11 @@ def gl(company, start_date, end_date):
     transactions = []
     doc_invoices = []
 
-    baseCurrency = frappe.get_value('Company', company, 'default_currency')
     invoices = docs('Sales Invoice', start_date, end_date)
     purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
     paymentEntry = docs('Payment Entry', start_date, end_date)
-    journalEntry = docs('Journal Entry', start_date, end_date)
+
+    # Sales Invoice
 
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
