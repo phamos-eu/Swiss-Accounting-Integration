@@ -45,7 +45,10 @@ def gl(company, start_date, end_date):
                         taxAccount, rate, tax_code, currency)
             )
 
-        # Taxes
+        if inv.write_off_amount != 0:
+            invoice['against_singles'].append(write_off(inv))
+
+            # Taxes
         for tax in inv.taxes:
             if is_expense(tax.item_wise_tax_detail):
                 for item in get_expenses(tax):
@@ -84,6 +87,9 @@ def gl(company, start_date, end_date):
                 inv_amt(item, item.expense_account, inv.currency,
                         taxAccount, rate, tax_code, currency)
             )
+
+        if inv.write_off_amount != 0:
+            invoice['against_singles'].append(write_off(inv))
 
         for tax in inv.taxes:
             if is_expense(tax.item_wise_tax_detail):
