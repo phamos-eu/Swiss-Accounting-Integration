@@ -109,6 +109,17 @@ def rounding_off(inv):
         return None
 
 
+def document_number(inv_name):
+    """
+    Converts
+    ACC-PINV-2021-00003 => 202100003
+    """
+    split_inv_name = inv_name.split('-')
+    join_inv_name = ''.join(split_inv_name)
+    num = [i for i in join_inv_name if i.isdigit()]
+    return ''.join(num)
+
+
 def invoice(inv, account_number, debit_credit, key_currency):
     return {
         'account': getAccountNumber(account_number),
