@@ -130,10 +130,11 @@ def invoice(inv, account_name,  debit_credit, key_currency):
     """
     For consistent Invoice
     """
+    print(account_name)
     return {
-        'account': getAccountNumber(account_number),
-        'amount': round(inv.rounded_total, 2),
-        'key_amount': round(inv.base_rounded_total, 2),
+        'account': getAccountNumber(account_name),
+        'amount': round(inv.rounded_total - inv.write_off_amount, 2),
+        'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2),
         'against_singles': [],
         'debit_credit': debit_credit,
         'date': inv.posting_date,
