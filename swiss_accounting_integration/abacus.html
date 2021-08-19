@@ -54,7 +54,7 @@
                     {%- if transaction.text2 %}
                     <Text2>{{ transaction.text2 }}</Text2>
                     {%- endif %}
-                    <DocumentNumber>{{ short_reference }}</DocumentNumber>
+                    <DocumentNumber>{{ transaction.document_number }}</DocumentNumber>
                     <SingleCount>{{ transaction.against_singles|len }}</SingleCount>
                 </CollectiveInformation>
                 {%- for against in transaction.against_singles %}
