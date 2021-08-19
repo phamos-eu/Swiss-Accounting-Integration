@@ -28,6 +28,9 @@ def gl(company, start_date, end_date):
         tax_code, taxAccount, rate = taxes(
             "Sales Taxes and Charges Template", inv)
 
+        currency = frappe.get_doc('Company', inv.company).default_currency
+
+        invoice = inv_f(inv, inv.debit_to, 'D', currency)
 
         # Round Off Account
         rounding_adjustment = rounding_off(inv)
