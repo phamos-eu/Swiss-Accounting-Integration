@@ -98,6 +98,7 @@ def rounding_off(inv):
         return {
             'account':  getAccountNumber(roundingAccount),
             'amount': inv.rounding_adjustment,
+            'keyamount': inv.base_rounding_adjustment,
             'currency': inv.currency,
             'tax_account':   None,
             'tax_amount': None,
