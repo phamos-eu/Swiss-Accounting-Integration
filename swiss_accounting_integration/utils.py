@@ -160,3 +160,17 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
         'tax_code': code or "312",
         'tax_currency': tax_currency,
     }
+
+
+def write_off(inv):
+    return {
+        'account':  getAccountNumber(inv.write_off_account),
+        'amount': - round(inv.base_write_off_amount, 2),
+        'keyamount': - round(inv.base_write_off_amount, 2),
+        'currency': inv.currency,
+        'tax_account':   None,
+        'tax_amount': None,
+        'tax_rate':  None,
+        'tax_code':  "312",
+        'tax_currency': inv.currency,
+    }
