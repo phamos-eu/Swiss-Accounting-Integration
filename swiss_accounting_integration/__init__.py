@@ -129,59 +129,6 @@ def gl(company, start_date, end_date):
 
         transactions.append(transaction)
 
-    # Journal Entry
-
-    for invoice in journalEntry:
-        inv = frappe.get_doc('Journal Entry', invoice.name)
-
-        if inv.accounts[0].debit_in_account_currency != 0:
-            debit_credit = "D"
-            amount = inv.accounts[0].debit_in_account_currency
-        else:
-            debit_credit = "C"
-            amount = inv.accounts[0].credit_in_account_currency
-
-        transaction = {
-            'account': getAccountNumber(inv.accounts[0].account),
-            'amount': amount,
-            'against_singles': [],
-            'debit_credit': debit_credit,
-            'date': inv.posting_date,
-            'currency': inv.accounts[0].account_currency,
-            'tax_account': None,
-            'tax_amount': None,
-            'tax_rate': None,
-            'tax_code': None,
-            'text1': cgi.escape(inv.name)
-        }
-
-        if inv.multi_currency == 1:
-            transaction['exchange_rate'] = inv.accounts[0].exchange_rate
-            transaction['key_currency'] = inv.accounts[0].account_currency
-        else:
-            transaction['key_currency'] = inv.accounts[0].account_currency
-
-        for i in range(1, len(inv.accounts), 1):
-
-            if debit_credit == "D":
-                amount = inv.accounts[i].credit_in_account_currency - \
-                    inv.accounts[i].debit_in_account_currency
-            else:
-                amount = inv.accounts[i].debit_in_account_currency - \
-                    inv.accounts[i].credit_in_account_currency
-
-            transaction_single = {
-                'account': getAccountNumber(inv.accounts[i].account),
-                'amount': amount,
-                'currency': inv.accounts[i].account_currency
-            }
-
-            if inv.multi_currency == 1:
-                transaction_single['exchange_rate'] = inv.accounts[i].exchange_rate
-                transaction_single['key_currency'] = inv.accounts[i].account_currency
-            transaction['against_singles'].append(transaction_single)
-        transactions.append(transaction)
-
     return frappe.render_template('abacus.html', data(doc_invoices, transactions))
 
 
