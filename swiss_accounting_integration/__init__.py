@@ -63,33 +63,44 @@ def gl(company, start_date, end_date):
         doc_invoices.append(invoice)
 
     # Purchase Invoice
-
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
+        tax_code, taxAccount, rate = taxes(
+            "Purchase Taxes and Charges Template", inv)
 
-        tax_code, taxAccount, rate = taxes(inv)
+        currency = frappe.get_doc('Company', inv.company).default_currency
 
+        invoice = inv_f(inv, inv.credit_to, 'C', currency)
+
+        # Rounding Off
+        rounding_adjustment = rounding_off(inv)
+
+        if rounding_adjustment:
+            invoice['against_singles'].append(rounding_adjustment)
+
+        # Item
         for item in inv.items:
-            transactions.append({
-                'account': getAccountNumber(inv.credit_to),
-                'amount': inv.base_grand_total,
-                'against_singles': [{
-                    'account':  getAccountNumber(item.expense_account),
-                    'amount': inv.base_net_total,
-                    'currency': inv.currency
-                }],
-                'debit_credit': 'C',
-                'date': inv.posting_date,
-                'currency': inv.currency,
-                'exchange_rate': inv.conversion_rate,
-                'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
-                'tax_amount': inv.total_taxes_and_charges or None,
-                'tax_rate': rate or None,
-                'tax_code': tax_code or "312",
-                'tax_currency': baseCurrency,
-                'text1': inv.name
-            })
+            invoice['against_singles'].append(
+                inv_amt(item, item.expense_account, inv.currency,
+                        taxAccount, rate, tax_code, currency)
+            )
 
+        for tax in inv.taxes:
+            if is_expense(tax.item_wise_tax_detail):
+                for item in get_expenses(tax):
+                    invoice['against_singles'].append({
+                        'account':  getAccountNumber(item['account']),
+                        'amount': item['amount'],
+                        'currency': inv.currency,
+                        'tax_account':   None,
+                        'tax_amount': None,
+                        'tax_rate':  None,
+                        'tax_code': None,
+                        'tax_currency': None,
+                    })
+
+        doc_invoices.append(invoice)
+    print(doc_invoices)
     # Payment Entry
 
     for invoice in paymentEntry:
