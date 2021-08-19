@@ -130,7 +130,6 @@ def invoice(inv, account_name,  debit_credit, key_currency):
     """
     For consistent Invoice
     """
-    print(account_name)
     return {
         'account': getAccountNumber(account_name),
         'amount': round(inv.rounded_total - inv.write_off_amount, 2),
