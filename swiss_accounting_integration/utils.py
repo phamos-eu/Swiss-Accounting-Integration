@@ -181,3 +181,9 @@ def write_off(inv):
         'tax_code':  "312",
         'tax_currency': inv.currency,
     }
+def reset_accounts(type, docs, flag):
+    """
+    Reset Document
+    """
+    for doc in docs:
+        frappe.set_value(type, doc.name,  'exported_to_abacus', flag)
