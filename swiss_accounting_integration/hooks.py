@@ -11,7 +11,7 @@ app_color = "grey"
 app_email = "paideepak@gmail.com"
 app_license = "MIT"
 fixtures = [{"dt": "Custom Field", "filters": [
-    ["fieldname", "in", ("esr_reference_code", 'tax_code')]]}]
+    ["fieldname", "in", ("esr_reference_code", 'tax_code', 'exported_to_abacus')]]}]
 
 # Includes in <head>
 # ------------------
