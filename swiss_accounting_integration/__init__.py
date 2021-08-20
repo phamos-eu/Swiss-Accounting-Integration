@@ -20,6 +20,10 @@ def gl(company, start_date, end_date):
     purchaseInvoices = docs('Purchase Invoice', start_date, end_date)
     paymentEntry = docs('Payment Entry', start_date, end_date)
 
+    sales_invoice_no = len(invoices)
+    purchase_invoice_no = len(purchaseInvoices)
+    payment_entry_no = len(paymentEntry)
+
     # Sales Invoice
 
     for invoice in invoices:
@@ -68,6 +72,7 @@ def gl(company, start_date, end_date):
     # Purchase Invoice
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
+
         tax_code, taxAccount, rate = taxes(
             "Purchase Taxes and Charges Template", inv)
 
@@ -111,6 +116,7 @@ def gl(company, start_date, end_date):
 
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
+
         transaction = {
             'account': getAccountNumber(inv.paid_from),
             'amount': inv.paid_amount,
