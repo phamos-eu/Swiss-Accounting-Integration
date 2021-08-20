@@ -82,16 +82,17 @@ def taxes(template, inv):
     Get Taxes if Any
     """
     if inv.taxes_and_charges:
-
         tax_record = frappe.get_doc(template, inv.taxes_and_charges)
         tax_code = getattr(tax_record, 'tax_code', 312)
         rate = tax_record.taxes[0].rate
         taxAccount = tax_record.taxes[0].account_head
+        taxAccountNumber = getAccountNumber(taxAccount)
     else:
         tax_code = None
         taxAccount = None
         rate = 0
-    return [tax_code, taxAccount, rate]
+        taxAccountNumber = None
+    return [tax_code, taxAccount, rate, taxAccountNumber]
 
 
 def rounding_off(inv):
@@ -131,7 +132,7 @@ def document_number(inv_name):
     return ''.join(num)
 
 
-def invoice(inv, account_name,  debit_credit, key_currency):
+def invoice(inv, account_name,  debit_credit, key_currency, tax_account):
     """
     For consistent Invoice
     """
@@ -146,6 +147,7 @@ def invoice(inv, account_name,  debit_credit, key_currency):
         'key_currency': key_currency,
         'exchange_rate': inv.conversion_rate,
         'text1': inv.name,
+        'tax_account': tax_account,
         'document_number': document_number(inv.name)
     }
 
