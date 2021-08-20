@@ -7,12 +7,11 @@ frappe.ui.form.on("Abacus Export", {
   refresh: (frm) => {
     if (frm.doc.docstatus == 1) {
       frm.add_custom_button("Re Export", function () {
-        const start_date = frm.doc.start_date;
-        const end_date = frm.doc.end_date;
-        const company = frm.doc.company;
-        const doctype = frm.doctype;
-        const docname = frm.docname;
+        const { start_date, end_date, company } = frm.doc;
+        const { doctype, docname } = frm;
+
         showProgress(20, "Getting File", "Getting File");
+
         fetch(
           encodeURI(
             `/api/method/swiss_accounting_integration.reset_account?start_date=${start_date}&end_date=${end_date}&company=${company}&doctype=${doctype}&docname=${docname}`
