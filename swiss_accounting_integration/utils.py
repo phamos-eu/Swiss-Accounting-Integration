@@ -181,6 +181,21 @@ def write_off(inv):
         'tax_code':  "312",
         'tax_currency': inv.currency,
     }
+
+
+def reset_docs(start_date, end_date):
+    """
+    Reset Docs Between Date Range
+    """
+    invoices = docs('Sales Invoice', start_date, end_date, False)
+    purchaseInvoices = docs('Purchase Invoice', start_date, end_date, False)
+    paymentEntry = docs('Payment Entry', start_date, end_date, False)
+
+    reset_accounts('Sales Invoice', invoices, 0)
+    reset_accounts('Purchase Invoice', purchaseInvoices, 0)
+    reset_accounts('Payment Entry', paymentEntry, 0)
+
+
 def reset_accounts(type, docs, flag):
     """
     Reset Document
