@@ -42,11 +42,18 @@ def getAccountNumber(account_name):
         return None
 
 
-def docs(doc, start, end):
+def docs(doc, start, end, exported=True):
     "Get Docs"
-    return frappe.get_list(doc, filters=[[
-        'posting_date', 'between', [start, end]
-    ], ['docstatus', '=', 1]])
+
+    filters = [
+        ['posting_date', 'between', [start, end]],
+        ['docstatus', '=', 1]
+    ]
+
+    if exported:
+        filters.append(['exported_to_abacus', '=', 0])
+
+    return frappe.get_list(doc, filters=filters)
 
 
 def get_xml(content):
