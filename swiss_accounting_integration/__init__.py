@@ -148,6 +148,11 @@ def gl(company, start_date, end_date):
     return frappe.render_template('abacus.html', data(doc_invoices, transactions, start_date, end_date, sales_invoice_no, purchase_invoice_no, payment_entry_no))
 
 
+def attach(company, start_date, end_date, doctype, name):
+    gl_xml = gl(company, start_date, end_date)
+    save_file('abacus.xml', gl_xml, doctype, name, is_private=True)
+
+
 def attach_xml(doc, event=None):
     """
     Attach XML File to Doctype
