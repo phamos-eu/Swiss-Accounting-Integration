@@ -6,6 +6,13 @@ frappe.ui.form.on('Abacus Export', {
 
 	// }
 });
+
+const showProgress = (current, description) => {
+  const title = "Recreating XML";
+  const total = 100;
+  window.frappe.show_progress(title, current, total, description, true);
+};
+
 const attachFile = (doctype, docname, file, frm) => {
   let formData = new FormData();
   formData.append("is_private", 1);
