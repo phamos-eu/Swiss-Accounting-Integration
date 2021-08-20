@@ -1,7 +1,7 @@
 [
  {
   "allow_in_quick_entry": 0,
-  "allow_on_submit": 0,
+  "allow_on_submit": 1,
   "bold": 0,
   "collapsible": 0,
   "collapsible_depends_on": null,
@@ -30,7 +30,7 @@
   "label": "Exported To Abacus",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2021-08-20 00:04:44.298987",
+  "modified": "2021-08-20 04:18:34.082713",
   "name": "Sales Invoice-exported_to_abacus",
   "no_copy": 0,
   "non_negative": 0,
@@ -54,7 +54,7 @@
  },
  {
   "allow_in_quick_entry": 0,
-  "allow_on_submit": 0,
+  "allow_on_submit": 1,
   "bold": 0,
   "collapsible": 0,
   "collapsible_depends_on": null,
@@ -83,7 +83,7 @@
   "label": "Exported To Abacus",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2021-08-20 00:05:25.858064",
+  "modified": "2021-08-20 04:18:16.938124",
   "name": "Purchase Invoice-exported_to_abacus",
   "no_copy": 0,
   "non_negative": 0,
@@ -107,7 +107,7 @@
  },
  {
   "allow_in_quick_entry": 0,
-  "allow_on_submit": 0,
+  "allow_on_submit": 1,
   "bold": 0,
   "collapsible": 0,
   "collapsible_depends_on": null,
@@ -136,7 +136,7 @@
   "label": "Exported To Abacus",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2021-08-20 00:05:52.325853",
+  "modified": "2021-08-20 04:18:07.836857",
   "name": "Payment Entry-exported_to_abacus",
   "no_copy": 0,
   "non_negative": 0,
