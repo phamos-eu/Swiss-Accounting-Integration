@@ -29,12 +29,12 @@ def gl(company, start_date, end_date):
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
-        tax_code, taxAccount, rate = taxes(
+        tax_code, taxAccount, rate, taxAccountNumber = taxes(
             "Sales Taxes and Charges Template", inv)
 
         currency = frappe.get_doc('Company', inv.company).default_currency
 
-        invoice = inv_f(inv, inv.debit_to, 'D', currency)
+        invoice = inv_f(inv, inv.debit_to, 'D', currency, taxAccountNumber)
 
         # Round Off Account
         rounding_adjustment = rounding_off(inv)
@@ -73,12 +73,12 @@ def gl(company, start_date, end_date):
     for invoice in purchaseInvoices:
         inv = frappe.get_doc('Purchase Invoice', invoice.name)
 
-        tax_code, taxAccount, rate = taxes(
+        tax_code, taxAccount, rate, taxAccountNumber = taxes(
             "Purchase Taxes and Charges Template", inv)
 
         currency = frappe.get_doc('Company', inv.company).default_currency
 
-        invoice = inv_f(inv, inv.credit_to, 'C', currency)
+        invoice = inv_f(inv, inv.credit_to, 'C', currency, taxAccountNumber)
 
         # Rounding Off
         rounding_adjustment = rounding_off(inv)
