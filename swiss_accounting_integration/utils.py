@@ -60,11 +60,16 @@ def get_xml(content):
     return resp
 
 
-def data(invoices, transactions):
+def data(invoices, transactions, start_date, end_date, sales_invoice_no, purchase_invoice_no, payment_entry_no):
     """
     Build Data
     """
     return {
+        'start_date': start_date,
+        'end_date': end_date,
+        'sales_invoice_no': sales_invoice_no,
+        'purchase_invoice_no': purchase_invoice_no,
+        'payment_entry_no': payment_entry_no,
         'invoices': invoices,
         'transactions': transactions
     }

@@ -145,7 +145,7 @@ def gl(company, start_date, end_date):
 
         transactions.append(transaction)
 
-    return frappe.render_template('abacus.html', data(doc_invoices, transactions))
+    return frappe.render_template('abacus.html', data(doc_invoices, transactions, start_date, end_date, sales_invoice_no, purchase_invoice_no, payment_entry_no))
 
 
 def attach_xml(doc, event=None):
