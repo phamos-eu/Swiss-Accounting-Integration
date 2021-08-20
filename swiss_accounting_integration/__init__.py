@@ -162,8 +162,9 @@ def attach_xml(doc, event=None):
     """
     Attach XML File to Doctype
     """
-    save_file('abacus.xml', gl(doc.company, doc.start_date, doc.end_date),
-              doc.doctype, doc.name, is_private=True)
+    attach(doc.company, doc.start_date, doc.end_date, doc.doctype, doc.name)
+
+
 @frappe.whitelist()
 def reset_account(company, start_date, end_date, doctype, docname):
     """
