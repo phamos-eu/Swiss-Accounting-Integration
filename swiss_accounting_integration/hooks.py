@@ -96,7 +96,7 @@ app_include_js = "/assets/swiss_accounting_integration/js/index.js"
 
 doc_events = {
     "Abacus Export": {
-        "after_insert": "swiss_accounting_integration.attach_xml",
+        "on_submit": "swiss_accounting_integration.attach_xml",
     }
 }
 
