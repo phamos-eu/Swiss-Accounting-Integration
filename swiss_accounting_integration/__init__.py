@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import frappe
 import cgi
 from frappe.utils.file_manager import save_file
-from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes, rounding_off, document_number, invoice as inv_f, amount as inv_amt, write_off, reset_docs, reset_accounts
+from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes, rounding_off, document_number, invoice as inv_f, amount as inv_amt, write_off, reset_docs, reset_accounts, payment_entry_amount
 
 __version__ = '0.0.4'
 
@@ -119,28 +119,30 @@ def gl(company, start_date, end_date):
 
         transaction = {
             'account': getAccountNumber(inv.paid_from),
-            'amount': inv.paid_amount,
+            'amount': payment_entry_amount(inv),
             'against_singles': [{
                 'account':  getAccountNumber(inv.paid_to),
                 'amount': inv.paid_amount,
-                'currency': inv.paid_to_account_currency
+                'currency': inv.paid_from_account_currency
             }],
             'debit_credit': 'C',
             'date': inv.posting_date,
-            'exchange_rate': inv.source_exchange_rate,
+            'exchange_rate': round(1/inv.target_exchange_rate, 2),
             'currency': inv.paid_from_account_currency,
+            'key_currency': inv.paid_to_account_currency,
             'tax_account': None,
             'tax_amount': None,
             'tax_rate': None,
             'tax_code': None,
-            'text1': inv.name
+            'text1': inv.name,
+            'document_number': document_number(inv.name)
         }
 
         for deduction in inv.deductions:
             transaction['against_singles'].append({
                 'account': getAccountNumber(deduction.account),
                 'amount': deduction.amount,
-                'currency': inv.paid_to_account_currency
+                'currency': inv.paid_from_account_currency
             })
 
         transactions.append(transaction)

@@ -209,3 +209,13 @@ def reset_accounts(type, docs, flag):
     """
     for doc in docs:
         frappe.set_value(type, doc.name,  'exported_to_abacus', flag)
+
+
+def payment_entry_amount(inv):
+    total = 0
+    total = total + inv.paid_amount
+
+    for deduction in inv.deductions:
+        total = total + deduction.amount
+
+    return total
