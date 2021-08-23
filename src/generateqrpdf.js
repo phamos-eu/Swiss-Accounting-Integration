@@ -25,7 +25,7 @@ export const generateQRPDF = (
   try {
     const pdf = new SwissQRBill.PDF(data, stream, {
       language: language || "DE",
-      size: papersize || "A4",
+      size: papersize || "A6/5",
     });
     showProgress(60, "generating pdf...");
     pdf.on("finish", () => {

@@ -40,23 +40,27 @@ const _filename = (name) => `${name}-QRBILL.pdf`;
  * @param {Object} frm Frappe Form Object
  */
 export const uploadFileAsAttachment = (file, docname, frm) => {
-  let formdata = new FormData();
-  formdata.append("is_private", 1);
-  formdata.append("folder", "Home/Attachments");
-  formdata.append("doctype", "Sales Invoice");
-  formdata.append("docname", docname);
-  formdata.append("file", file, _filename(docname));
-  fetch(FRAPPE_FILE_UPLOAD_ENDPOINT, {
-    headers: {
-      Accept: "application/json",
-      "X-Frappe-CSRF-Token": window.frappe.csrf_token,
-    },
-    method: "POST",
-    body: formdata,
-  }).then(() => {
-    showProgress(100, "done");
-    frm.reload_doc();
-  });
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = function () {
+    let formdata = new FormData();
+    formdata.append("is_private", 1);
+    formdata.append("folder", "Home/Attachments");
+    formdata.append("doctype", "Sales Invoice");
+    formdata.append("docname", docname);
+    formdata.append("pdf_data", reader.result);
+    fetch(FRAPPE_FILE_UPLOAD_ENDPOINT, {
+      headers: {
+        Accept: "application/json",
+        "X-Frappe-CSRF-Token": window.frappe.csrf_token,
+      },
+      method: "POST",
+      body: formdata,
+    }).then(() => {
+      showProgress(100, "done");
+      frm.reload_doc();
+    });
+  };
 };
 
 /**

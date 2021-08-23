@@ -10,4 +10,5 @@ WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
 MERCHANTABLITY OR NON-INFRINGEMENT.
 
 ***************************************************************************** */
-export const FRAPPE_FILE_UPLOAD_ENDPOINT = "/api/method/upload_file";
+export const FRAPPE_FILE_UPLOAD_ENDPOINT =
+  "/api/method/swiss_accounting_integration.attach_pdf.attach_pdf";
