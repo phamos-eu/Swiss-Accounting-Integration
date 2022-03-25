@@ -139,13 +139,27 @@ def document_number(inv_name):
     return ''.join(num)
 
 def getSingles(against):
-    """ recieve inv.against_singles payload"""
+    # get from inv.against_singles special tax included in item
     against_single = []
-    if not against: return against_single
+    if (not len(against) > 0): return against_single
     
-    # get from inv.against_singles special tax included in item 
+    """
+    recieve inv.against_singles payload 
+    --
+    .currency
+    .amount
+    .keyamount
+    .account
+    .tax_code
+    .tax_account
+    .tax_currency
+    .tax_amount
+    .tax_rate
+
+    """ 
     
     against_single = against
+    #against_single = [s for s in against if s.amount > 0]
     return against_single
 
 def invoice(inv, account_name,  debit_credit, key_currency, tax_account):
@@ -156,7 +170,7 @@ def invoice(inv, account_name,  debit_credit, key_currency, tax_account):
         'account': getAccountNumber(account_name),
         'amount': round(inv.rounded_total - inv.write_off_amount, 2),
         'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2),
-        'against_singles': getSingles(inv.against_singles) if inv.against_singles else [],
+        'against_singles': getSingles(inv.against_singles) if len(inv.against_singles) > 0 else [],
         'debit_credit': debit_credit,
         'date': inv.posting_date,
         'currency': inv.currency,
