@@ -63,7 +63,7 @@ def gl(company, start_date, end_date):
                         'tax_account':   None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': None,
+                        'tax_code': tax.steuerziffer_ch,
                         'tax_currency': None,
                     })
 
@@ -87,6 +87,7 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(rounding_adjustment)
 
         # Item
+        print("System")
         for item in inv.items:
             invoice['against_singles'].append(
                 inv_amt(item, item.expense_account, inv.currency,
@@ -97,6 +98,7 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(write_off(inv))
 
         for tax in inv.taxes:
+            print(tax)
             if is_expense(tax.item_wise_tax_detail):
                 for item in get_expenses(tax):
                     invoice['against_singles'].append({

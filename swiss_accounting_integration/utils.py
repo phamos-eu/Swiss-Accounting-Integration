@@ -171,7 +171,7 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
         'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
         'tax_amount': item.base_net_amount * rate / 100,
         'tax_rate': rate or None,
-        'tax_code': item.tax_code or "312",
+        'tax_code': item.steuerziffer_ch or item.tax_code or "312",
         'tax_currency': tax_currency,
     }
 
