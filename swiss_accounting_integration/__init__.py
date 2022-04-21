@@ -108,7 +108,7 @@ def gl(company, start_date, end_date):
                         'tax_account':   None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch,
+                        'tax_code': tax.steuerziffer_ch if 'tax.steuerziffer_ch' in locals() or 'tax.steuerziffer_ch' in globals() else None,
                         'tax_currency': None,
                     })
 
