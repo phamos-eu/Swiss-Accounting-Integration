@@ -26,7 +26,7 @@ def get_expenses(tax):
     for item in values:
         items.append({
             'account': tax.account_head,
-            'amount': item[1]
+            'amount': item[1],
         })
     return items
 
@@ -146,7 +146,7 @@ def invoice(inv, account_name,  debit_credit, key_currency, tax_account):
     return {
         'account': getAccountNumber(account_name),
         'amount': round(inv.rounded_total - inv.write_off_amount, 2),
-        'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2) or 0.00,
+        'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2),
         'against_singles': [],
         'debit_credit': debit_credit,
         'date': inv.posting_date,
@@ -167,7 +167,7 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
     return {
         'account':  getAccountNumber(income_account),
         'amount': round(item.net_amount + (item.net_amount * rate / 100), 2),
-        'keyamount': round(item.base_net_amount + (item.base_net_amount * rate / 100), 2) or 0.00,
+        'keyamount': round(item.base_net_amount + (item.base_net_amount * rate / 100), 2),
         'currency': inv_currency,
         'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
         'tax_amount': item.base_net_amount * rate / 100,

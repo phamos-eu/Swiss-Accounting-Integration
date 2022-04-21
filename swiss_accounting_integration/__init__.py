@@ -65,6 +65,7 @@ def gl(company, start_date, end_date):
                         'tax_rate':  None,
                         'tax_code': tax.steuerziffer_ch or 0,
                         'tax_currency': None,
+                        'keyamount': 0.0,
                     })
 
         doc_invoices.append(invoice)
@@ -108,6 +109,7 @@ def gl(company, start_date, end_date):
                         'tax_rate':  None,
                         'tax_code': tax.steuerziffer_ch or 0,
                         'tax_currency': None,
+                        'keyamount': 0.0,
                     })
 
         doc_invoices.append(invoice)
