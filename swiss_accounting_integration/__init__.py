@@ -52,7 +52,7 @@ def gl(company, start_date, end_date):
         if inv.write_off_amount != 0:
             invoice['against_singles'].append(write_off(inv))
 
-            # Taxes
+        # Taxes
         for tax in inv.taxes:
             if is_expense(tax.item_wise_tax_detail):
                 for item in get_expenses(tax):
@@ -63,7 +63,7 @@ def gl(company, start_date, end_date):
                         'tax_account':   None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch,
+                        'tax_code': tax.steuerziffer_ch or 0,
                         'tax_currency': None,
                     })
 
@@ -87,7 +87,6 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(rounding_adjustment)
 
         # Item
-        print("System")
         for item in inv.items:
             invoice['against_singles'].append(
                 inv_amt(item, item.expense_account, inv.currency,
@@ -98,7 +97,6 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(write_off(inv))
 
         for tax in inv.taxes:
-            print(tax)
             if is_expense(tax.item_wise_tax_detail):
                 for item in get_expenses(tax):
                     invoice['against_singles'].append({
@@ -108,7 +106,7 @@ def gl(company, start_date, end_date):
                         'tax_account':   None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch if 'tax.steuerziffer_ch' in locals() or 'tax.steuerziffer_ch' in globals() else None,
+                        'tax_code': tax.steuerziffer_ch or 0,
                         'tax_currency': None,
                     })
 
@@ -135,7 +133,7 @@ def gl(company, start_date, end_date):
             'tax_account': None,
             'tax_amount': None,
             'tax_rate': None,
-            'tax_code': None,
+            'tax_code': 0,
             'text1': inv.name,
             'document_number': document_number(inv.name)
         }

@@ -90,12 +90,12 @@ def taxes(template, inv):
     """
     if inv.taxes_and_charges:
         tax_record = frappe.get_doc(template, inv.taxes_and_charges)
-        tax_code = getattr(tax_record, 'tax_code', 312)
+        tax_code = getattr(tax_record, 'steuerziffer_ch', 312)
         rate = tax_record.taxes[0].rate
         taxAccount = tax_record.taxes[0].account_head
         taxAccountNumber = getAccountNumber(taxAccount)
     else:
-        tax_code = None
+        tax_code = 0
         taxAccount = None
         rate = 0
         taxAccountNumber = None
@@ -121,7 +121,7 @@ def rounding_off(inv):
             'tax_account':   None,
             'tax_amount': None,
             'tax_rate':  None,
-            'tax_code': None,
+            'tax_code': 0,
             'tax_currency': None,
         }
     else:
@@ -146,7 +146,7 @@ def invoice(inv, account_name,  debit_credit, key_currency, tax_account):
     return {
         'account': getAccountNumber(account_name),
         'amount': round(inv.rounded_total - inv.write_off_amount, 2),
-        'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2),
+        'key_amount': round(inv.base_rounded_total - inv.base_write_off_amount, 2) or 0.00,
         'against_singles': [],
         'debit_credit': debit_credit,
         'date': inv.posting_date,
@@ -163,15 +163,16 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
     """
     Amount: for items
     """
+
     return {
         'account':  getAccountNumber(income_account),
         'amount': round(item.net_amount + (item.net_amount * rate / 100), 2),
-        'keyamount': round(item.base_net_amount + (item.base_net_amount * rate / 100), 2),
+        'keyamount': round(item.base_net_amount + (item.base_net_amount * rate / 100), 2) or 0.00,
         'currency': inv_currency,
         'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
         'tax_amount': item.base_net_amount * rate / 100,
         'tax_rate': rate or None,
-        'tax_code': item.steuerziffer_ch if 'item.steuerziffer_ch' in locals() or 'item.steuerziffer_ch' in globals() else item.tax_code or "312",
+        'tax_code': item.steuerziffer_ch or 0,
         'tax_currency': tax_currency,
     }
 
