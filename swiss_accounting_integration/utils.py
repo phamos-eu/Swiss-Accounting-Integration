@@ -39,7 +39,7 @@ def getAccountNumber(account_name):
     if account_name:
         return frappe.get_value('Account', account_name, 'account_number')
     else:
-        return None
+        return None 
 
 
 def docs(doc, start, end, exported=True):
@@ -90,12 +90,12 @@ def taxes(template, inv):
     """
     if inv.taxes_and_charges:
         tax_record = frappe.get_doc(template, inv.taxes_and_charges)
-        tax_code = getattr(tax_record, 'steuerziffer_ch', 312)
+        tax_code = getattr(tax_record, 'tax_code', 312)
         rate = tax_record.taxes[0].rate
         taxAccount = tax_record.taxes[0].account_head
         taxAccountNumber = getAccountNumber(taxAccount)
     else:
-        tax_code = 0
+        tax_code = None
         taxAccount = None
         rate = 0
         taxAccountNumber = None
@@ -121,7 +121,7 @@ def rounding_off(inv):
             'tax_account':   None,
             'tax_amount': None,
             'tax_rate':  None,
-            'tax_code': 0,
+            'tax_code': None,
             'tax_currency': None,
         }
     else:
@@ -163,7 +163,6 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
     """
     Amount: for items
     """
-
     return {
         'account':  getAccountNumber(income_account),
         'amount': round(item.net_amount + (item.net_amount * rate / 100), 2),
@@ -172,7 +171,7 @@ def amount(item, income_account, inv_currency,  taxAccount, rate, code, tax_curr
         'tax_account':   getAccountNumber(taxAccount) if taxAccount else None,
         'tax_amount': item.base_net_amount * rate / 100,
         'tax_rate': rate or None,
-        'tax_code': item.steuerziffer_ch or 0,
+        'tax_code': item.steuerziffer_ch if item.steuerziffer_ch != None else code,
         'tax_currency': tax_currency,
     }
 

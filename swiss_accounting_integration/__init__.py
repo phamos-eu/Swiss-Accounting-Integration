@@ -63,7 +63,7 @@ def gl(company, start_date, end_date):
                         'tax_account': getAccountNumber(taxAccount) if taxAccount else None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch or 0,
+                        'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else  tax_code,
                         'tax_currency': None,
                         'keyamount': 0.0,
                     })
@@ -107,7 +107,7 @@ def gl(company, start_date, end_date):
                         'tax_account': getAccountNumber(taxAccount) if taxAccount else None,
                         'tax_amount': None,
                         'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch or 0,
+                        'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else tax_code,
                         'tax_currency': None,
                         'keyamount': 0.0,
                     })
