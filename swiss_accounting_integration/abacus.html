@@ -90,7 +90,7 @@
                             <Currency>{{ against.tax_currency }}</Currency>
                             <Amount>0</Amount>
 		    	</AmountData>
-			<TaxCode>{{ against.tax_code }}</TaxCode>
+			{%- if against.tax_code %}<TaxCode>{{ against.tax_code }}</TaxCode>{%- endif %}
                         <KeyAmount>{{ "{:.2f}".format(((against.tax_amount or 0) * (-1))) }}</KeyAmount>
                         <TaxRate>{{ against.tax_rate or 0 }}</TaxRate>
                         <TaxCoefficient>100</TaxCoefficient>
@@ -184,7 +184,7 @@
                         <TaxRate>{{ transaction.tax_rate or 0 }}</TaxRate>
                         <TaxCoefficient>100</TaxCoefficient>
                         <Country>CH</Country>
-                        <TaxCode>{{ transaction.tax_code }}</TaxCode>
+			{%- if against.tax_code %}<TaxCode>{{ transaction.tax_code }}</TaxCode>{%- endif %}
                         <Number></Number>
                         <FlatRate>0</FlatRate>
                     </TaxData>
