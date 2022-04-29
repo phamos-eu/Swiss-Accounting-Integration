@@ -72,7 +72,8 @@
                         <Amount>{{ "{:.2f}".format(against.amount) }}</Amount>
                     </AmountData>
                     <KeyAmount>{{ against.keyamount }}</KeyAmount>
-                    <Account>{{ against.account }}</Account>
+		    <!-- <Account>{{ against.account }}</Account> -->
+		    <Account>{{ against.expense_account or None }}</Account>
                     {%- if transaction.tax_account %}
                     <TaxAccount>{{ transaction.tax_account }}</TaxAccount>
                     {%- endif %}
@@ -91,8 +92,12 @@
                             <Amount>0</Amount>
 		    	</AmountData>
 			{%- if against.tax_code %}<TaxCode>{{ against.tax_code }}</TaxCode>{%- endif %}
-                        <KeyAmount>{{ "{:.2f}".format(((against.tax_amount or 0) * (-1))) }}</KeyAmount>
-                        <TaxRate>{{ against.tax_rate or 0 }}</TaxRate>
+			<KeyAmount>{{ "{:.2f}".format(((against.tax_amount or 0) * (-1))) }}</KeyAmount>
+				{%- if against.charge_type == "Actual" %}
+					<TaxRate>100<TaxRate>
+				{%- else %}
+					<TaxRate>{{ against.tax_rate or 0 }}</TaxRate>
+                        	{%- endif %}
                         <TaxCoefficient>100</TaxCoefficient>
                         <Country>CH</Country>
                         <Number></Number>

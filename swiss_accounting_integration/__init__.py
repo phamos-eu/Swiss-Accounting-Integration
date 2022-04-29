@@ -108,9 +108,11 @@ def gl(company, start_date, end_date):
                         'tax_amount': None,
                         'tax_rate':  None,
                         'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else tax_code,
-                        'tax_currency': None,
-                        'keyamount': 0.0,
+                        'tax_currency': tax.tax_currency or None,
+                        'keyamount': tax.amount if tax.charge_type == "Actual" else None,
+                        'expense_account': tax.expense_account or None
                     })
+
 
         doc_invoices.append(invoice)
 
