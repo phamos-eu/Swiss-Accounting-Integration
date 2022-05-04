@@ -61,11 +61,11 @@ def gl(company, start_date, end_date):
                         'amount': item['amount'],
                         'currency': inv.currency,
                         'tax_account': getAccountNumber(taxAccount) if taxAccount else None,
-                        'tax_amount': None,
-                        'tax_rate':  None,
-                        'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else  tax_code,
-                        'tax_currency': None,
-                        'keyamount': 0.0,
+                        'tax_amount': tax.tax_amount or None,
+                        'tax_rate':  tax.rate or None,
+                        'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else tax_code,
+                        'tax_currency': tax.account_currency or None,
+                        'keyamount': tax.tax_amount if tax.charge_type == "Actual" else None,
                     })
 
         doc_invoices.append(invoice)
@@ -105,11 +105,11 @@ def gl(company, start_date, end_date):
                         'amount': item['amount'],
                         'currency': inv.currency,
                         'tax_account': getAccountNumber(taxAccount) if taxAccount else None,
-                        'tax_amount': None,
-                        'tax_rate':  None,
+                        'tax_amount': tax.tax_amount or None,
+                        'tax_rate':  tax.rate or None,
                         'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else tax_code,
                         'tax_currency': tax.account_currency or None,
-                        'keyamount': tax.amount if tax.charge_type == "Actual" else None,
+                        'keyamount': tax.tax_amount if tax.charge_type == "Actual" else None,
                         'expense_account': tax.expense_account or None
                     })
 
