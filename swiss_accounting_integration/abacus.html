@@ -73,7 +73,7 @@
                     </AmountData>
                     <KeyAmount>{{ against.keyamount }}</KeyAmount>
 		    <!-- <Account>{{ against.account }}</Account> -->
-		    <Account>{{ against.expense_account or None }}</Account>
+		    <Account>{{ against.expense_account or against.account }}</Account>
                     {%- if transaction.tax_account %}
                     <TaxAccount>{{ transaction.tax_account }}</TaxAccount>
                     {%- endif %}

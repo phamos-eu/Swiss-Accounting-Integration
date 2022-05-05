@@ -110,7 +110,7 @@ def gl(company, start_date, end_date):
                         'tax_code': tax.steuerziffer_ch if tax.steuerziffer_ch != None else tax_code,
                         'tax_currency': tax.account_currency or None,
                         'keyamount': tax.tax_amount if tax.charge_type == "Actual" else None,
-                        'expense_account': tax.expense_account or None
+                        'expense_account': tax.expense_account if tax.expense_account else None
                     })
 
 
