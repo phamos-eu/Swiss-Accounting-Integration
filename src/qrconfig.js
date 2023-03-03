@@ -42,7 +42,7 @@ export const generateQRConfig = (
   reference,
   creditor: {
     name: company, //
-    address: `${companyAddress.address_line1} ${companyAddress.address_line2}`, // Address Line 1 & line 2
+    address: ((companyAddress.address_line2 != null) ? `${companyAddress.address_line1} ${companyAddress.address_line2}` : companyAddress.address_line1), // Address Line 1 & line 2
     zip: parseInt(companyAddress.pincode), // Bank Account  Code
     city: companyAddress.city, // Bank Account City
     account: iban, // Bank Account Iban
@@ -50,7 +50,7 @@ export const generateQRConfig = (
   },
   debtor: {
     name: customer, // Customer Doctype
-    address: `${customerAddress.address_line1} ${customerAddress.address_line2}`, // Address Line 1 & 2
+    address: ((customerAddress.address_line2 != null) ? `${customerAddress.address_line1} ${customerAddress.address_line2}` :  customerAddress.address_line1), // Address Line 1 & 2
     zip: customerAddress.pincode, // Sales Invoice PCode
     city: customerAddress.city, // Sales Invoice City
     country: customerAddressCode, // Sales Invoice Country
