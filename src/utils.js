@@ -101,9 +101,9 @@ export const getLanguageCode = (language) => {
   }
 
   if (
-    (language === "en") |
-    (language === "fr") |
-    (language === "it") |
+    (language === "en") ||
+    (language === "fr") ||
+    (language === "it") ||
     (language === "de")
   ) {
     return language.toUpperCase();
