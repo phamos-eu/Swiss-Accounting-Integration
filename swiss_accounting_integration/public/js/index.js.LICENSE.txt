@@ -11,4 +11,5 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 
 ***************************************************************************** */
 
-/*! For license information please see browser.js.LICENSE.txt */
+/*! For license information please see browser.js.LICENSE.txt */ 
+
