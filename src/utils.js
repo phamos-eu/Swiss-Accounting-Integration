@@ -48,6 +48,7 @@ export const uploadFileAsAttachment = (file, docname, frm) => {
     formdata.append("folder", "Home/Attachments");
     formdata.append("doctype", "Sales Invoice");
     formdata.append("docname", docname);
+    formdata.append("doclang", frm.doc.language);
     formdata.append("pdf_data", reader.result);
     fetch(FRAPPE_FILE_UPLOAD_ENDPOINT, {
       headers: {
@@ -101,9 +102,9 @@ export const getLanguageCode = (language) => {
   }
 
   if (
-    (language === "en") ||
-    (language === "fr") ||
-    (language === "it") ||
+    (language === "en") |
+    (language === "fr") |
+    (language === "it") |
     (language === "de")
   ) {
     return language.toUpperCase();

@@ -49,6 +49,7 @@ def attach_pdf(**kwargs):
     doctype = 'Sales Invoice'
     pdf = kwargs['pdf_data']
     docname = kwargs['docname']
+    frappe.local.lang = kwargs['doclang']
     pdf_data = pdf.split(',')[1]
     encoded_data = pdf_data.encode('utf-8')
 

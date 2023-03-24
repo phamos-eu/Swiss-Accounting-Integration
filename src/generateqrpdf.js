@@ -24,15 +24,15 @@ export const generateQRPDF = (
   const stream = new SwissQRBill.BlobStream();
   try {
     const pdf = new SwissQRBill.PDF(data, stream, {
-      language: language || "DE",
-      size: papersize || "A6/5",
+      "language": language || "DE",
+      "size": papersize || "A6/5"
     });
     showProgress(60, "generating pdf...");
     pdf.on("finish", () => {
       // const url = stream.toBlobURL("application/pdf");
       // const triggerDownload()
       showProgress(80, "uploading pdf...");
-      uploadFileAsAttachment(stream.toBlob(), docname, frm);
+      uploadFileAsAttachment(stream.toBlob("application/pdf"), docname, frm);
     });
   } catch (error) {
     showError(error);
