@@ -12,7 +12,16 @@ def save_and_attach(content, to_doctype, to_name):
 
 
 def get_pdf_data(doctype, name):
+    # Get Language from document without raising exception
+    language = frappe.db.get_value(doctype, name, 'language', ignore=True)
+    # Save Current Language
+    # Taken from @contextmanager print_language from frappe.translate
+    _lang = frappe.local.lang
+    # if not language revert
+    frappe.local.lang = language if language else _lang
     html = frappe.get_print(doctype, name)
+    # Reset the lang
+    frappe.local.lang = _lang
     return frappe.utils.pdf.get_pdf(html)
 
 
