@@ -23,7 +23,7 @@ import {
 
 export const createQRBill = async (frm) => {
   showProgress(10, "getting data...");
-  const customer = frm.doc.customer;
+  const customer = frm.doc.customer_name;
   const amount = frm.doc.grand_total;
   const reference = getReferenceCode(frm.doc.name);
   const company = frm.doc.company;
