@@ -15,14 +15,26 @@ import { getReferenceCode } from "./utils";
 
 window.frappe.ui.form.on("Sales Invoice", {
   on_submit: (frm) => {
+
+    if(frm.doc.docstatus == 1) {
+      return;
+    }
+
     createQRBill(frm);
   },
 
   onload: (frm) => {
+    if(frm.doc.docstatus == 1) {
+      return;
+    }
     frm.doc.esr_reference_code = "";
   },
 
   before_submit: (frm) => {
+
+    if(frm.doc.docstatus == 1) {
+      return;
+    }
     const reference = getReferenceCode(frm.doc.name);
     frm.doc.esr_reference_code = reference;
   },
