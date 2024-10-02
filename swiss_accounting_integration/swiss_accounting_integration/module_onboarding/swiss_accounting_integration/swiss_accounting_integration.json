@@ -1,0 +1,38 @@
+{
+ "allow_roles": [
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "Accounts User"
+  }
+ ],
+ "creation": "2024-09-30 10:23:08.681056",
+ "docstatus": 0,
+ "doctype": "Module Onboarding",
+ "documentation_url": "https://github.com/phamos-eu/Swiss-Accounting-Integration",
+ "idx": 0,
+ "is_complete": 0,
+ "modified": "2024-10-02 16:21:29.134510",
+ "modified_by": "Administrator",
+ "module": "Swiss Accounting Integration",
+ "name": "Swiss Accounting Integration",
+ "owner": "Administrator",
+ "steps": [
+  {
+   "step": "Company Set Up"
+  },
+  {
+   "step": "Create a Customer with Proper Address and Language"
+  },
+  {
+   "step": "Set Up Bank Accounts For Company with IBAN"
+  },
+  {
+   "step": "Set Up Swiss QR Bill Settings"
+  }
+ ],
+ "subtitle": "Company, Addresses and Bank Accounts",
+ "success_message": "The Swiss Accounting Integration is all set up!",
+ "title": "Let's Set Up the Swiss Accounting Integration"
+}

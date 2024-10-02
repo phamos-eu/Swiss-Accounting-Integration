@@ -1,0 +1,98 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"d7xWJ-MHxx\",\"type\":\"onboarding\",\"data\":{\"onboarding_name\":\"Swiss Accounting Integration\",\"col\":12}},{\"id\":\"MzS2a5bizb\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Swiss Accounting Integration</span>\",\"col\":12}},{\"id\":\"t_lt65FrRA\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings and Masters\",\"col\":4}},{\"id\":\"Rq7xqjgcon\",\"type\":\"card\",\"data\":{\"card_name\":\"Abacus\",\"col\":4}}]",
+ "creation": "2024-09-30 10:24:35.481968",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 1,
+ "icon": "integration",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Swiss Accounting Integration",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Abacus",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Abacus Export",
+   "link_count": 0,
+   "link_to": "Abacus Export",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings and Masters",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Company",
+   "link_count": 0,
+   "link_to": "Company",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank Account",
+   "link_count": 0,
+   "link_to": "Bank Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Swiss QR Bill Settings",
+   "link_count": 0,
+   "link_to": "Swiss QR Bill Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-10-02 12:00:46.001390",
+ "modified_by": "Administrator",
+ "module": "Swiss Accounting Integration",
+ "name": "Swiss Accounting Integration",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 6.0,
+ "shortcuts": [],
+ "title": "Swiss Accounting Integration"
+}
