@@ -13,14 +13,14 @@
  "documentation_url": "https://github.com/phamos-eu/Swiss-Accounting-Integration",
  "idx": 0,
  "is_complete": 0,
- "modified": "2024-09-30 13:06:28.381256",
+ "modified": "2024-10-02 16:21:29.134510",
  "modified_by": "Administrator",
  "module": "Swiss Accounting Integration",
  "name": "Swiss Accounting Integration",
  "owner": "Administrator",
  "steps": [
   {
-   "step": "Set Up Company Address"
+   "step": "Company Set Up"
   },
   {
    "step": "Create a Customer with Proper Address and Language"
