@@ -13,6 +13,14 @@ app_license = "MIT"
 fixtures = [{"dt": "Custom Field", "filters": [
     ["fieldname", "in", ("esr_reference_code", 'tax_code', 'exported_to_abacus')]]}]
 
+
+#custom icon which will be set as workspace icon in the sidebar menu
+app_include_icons = [
+	"swiss_accounting_integration/icons/custom_icons/icons.svg"
+]
+
+#boot_session = "swiss_accounting_integration.boot.update_boot_context"
+
 # Includes in <head>
 # ------------------
 

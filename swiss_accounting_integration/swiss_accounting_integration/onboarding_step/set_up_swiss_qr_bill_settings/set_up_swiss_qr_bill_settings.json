@@ -1,0 +1,21 @@
+{
+ "action": "Create Entry",
+ "action_label": "Let's review your Swiss QR Bill Settings",
+ "creation": "2024-09-30 13:06:14.225462",
+ "description": "# Set Up Swiss QR Bill Settings\n\nSwiss QR Bill Settings will let you setup the company with a default bank account for a specified QR Code Type.\n",
+ "docstatus": 0,
+ "doctype": "Onboarding Step",
+ "idx": 0,
+ "is_complete": 0,
+ "is_single": 0,
+ "is_skipped": 0,
+ "modified": "2024-09-30 13:06:14.225462",
+ "modified_by": "Administrator",
+ "name": "Set Up Swiss QR Bill Settings",
+ "owner": "Administrator",
+ "reference_document": "Swiss QR Bill Settings",
+ "show_form_tour": 1,
+ "show_full_form": 1,
+ "title": "Set Up Swiss QR Bill Settings",
+ "validate_action": 1
+}
