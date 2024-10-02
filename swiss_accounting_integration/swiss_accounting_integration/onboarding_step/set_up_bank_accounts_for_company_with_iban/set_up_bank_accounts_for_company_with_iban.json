@@ -1,0 +1,21 @@
+{
+ "action": "Create Entry",
+ "action_label": "Let's review your Bank Account",
+ "creation": "2024-09-30 10:42:31.790779",
+ "description": "# Set Up Bank Accounts with Proper IBAN\n\nBank Accounts can be created for a Company as well as other parties like Customers, Suppliers etc. Doing this lets you record all the bank transactions correctly for accounting accuracy.\n\nWithin the bank account, you can setup a proper IBAN for that bank account.",
+ "docstatus": 0,
+ "doctype": "Onboarding Step",
+ "idx": 1,
+ "is_complete": 0,
+ "is_single": 0,
+ "is_skipped": 0,
+ "modified": "2024-09-30 10:42:59.601817",
+ "modified_by": "Administrator",
+ "name": "Set Up Bank Accounts For Company with IBAN",
+ "owner": "Administrator",
+ "reference_document": "Bank Account",
+ "show_form_tour": 1,
+ "show_full_form": 1,
+ "title": "Set Up Bank Accounts For Company with IBAN",
+ "validate_action": 1
+}
