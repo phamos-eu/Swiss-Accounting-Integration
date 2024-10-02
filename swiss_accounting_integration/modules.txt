@@ -1,2 +1,3 @@
 Abacus Exports
 Swiss QR Bill
+Swiss Accounting Integration

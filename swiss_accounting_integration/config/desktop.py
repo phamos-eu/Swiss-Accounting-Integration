@@ -7,7 +7,7 @@ def get_data():
 		{
 			"module_name": "Swiss Accounting Integration",
 			"color": "grey",
-			"icon": "octicon octicon-file-directory",
+			"icon": "assets/swiss_accounting_integration/images/swiss-accounting-integration.svg",
 			"type": "module",
 			"label": _("Swiss Accounting Integration")
 		}
