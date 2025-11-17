@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import frappe
-import cgi
-from frappe.utils.file_manager import save_file
-from .utils import is_expense, get_expenses, getAccountNumber, docs, data, taxes, rounding_off, document_number, invoice as inv_f, amount as inv_amt, write_off, reset_docs, reset_accounts, payment_entry_amount
 
 __version__ = '0.0.6'
 
@@ -12,6 +8,17 @@ def gl(company, start_date, end_date):
     """
     Abacus XML
     """
+    import frappe
+    import cgi
+    from frappe.utils.file_manager import save_file
+    from .utils import 
+    {
+        is_expense, get_expenses, getAccountNumber, docs,
+        data, taxes, rounding_off, document_number,
+        invoice as inv_f, amount as inv_amt, write_off,
+        reset_docs, reset_accounts, payment_entry_amount 
+    }
+
 
     transactions = []
     doc_invoices = []
