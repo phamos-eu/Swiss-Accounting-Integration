@@ -8,6 +8,7 @@ def gl(company, start_date, end_date):
     """
     Abacus XML
     """
+
     import frappe
     from frappe.utils.file_manager import save_file
     from .utils import (
@@ -28,7 +29,6 @@ def gl(company, start_date, end_date):
     payment_entry_no = len(paymentEntry)
 
     # Sales Invoice
-
     for invoice in invoices:
         inv = frappe.get_doc('Sales Invoice', invoice.name)
 
@@ -116,11 +116,9 @@ def gl(company, start_date, end_date):
                         'expense_account': tax.expense_account if tax.expense_account else None
                     })
 
-
         doc_invoices.append(invoice)
 
     # Payment Entry
-
     for invoice in paymentEntry:
         inv = frappe.get_doc('Payment Entry', invoice.name)
 
@@ -154,31 +152,34 @@ def gl(company, start_date, end_date):
 
         transactions.append(transaction)
 
-    # Set Accounts
+    # Reset Accounts
     reset_accounts('Sales Invoice', invoices, 1)
     reset_accounts('Purchase Invoice', purchaseInvoices, 1)
     reset_accounts('Payment Entry', paymentEntry, 1)
 
-    return frappe.render_template('abacus.html', data(doc_invoices, transactions, start_date, end_date, sales_invoice_no, purchase_invoice_no, payment_entry_no))
+    return frappe.render_template(
+        'abacus.html',
+        data(doc_invoices, transactions, start_date, end_date,
+             sales_invoice_no, purchase_invoice_no, payment_entry_no)
+    )
 
 
 def attach(company, start_date, end_date, doctype, name):
+    import frappe
+    from frappe.utils.file_manager import save_file
+
     gl_xml = gl(company, start_date, end_date)
     save_file('abacus.xml', gl_xml, doctype, name, is_private=True)
 
 
 def attach_xml(doc, event=None):
-    """
-    Attach XML File to Doctype
-    """
     attach(doc.company, doc.start_date, doc.end_date, doc.doctype, doc.name)
 
 
-@frappe.whitelist()
 def reset_account(company, start_date, end_date, doctype, docname):
-    """
-    Reset and Re Attach
-    """
+    import frappe
+    from .utils import reset_docs
+
     reset_docs(start_date, end_date)
     return {
         'file': gl(company, start_date, end_date)
