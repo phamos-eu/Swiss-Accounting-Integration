@@ -43,7 +43,7 @@ export const generateQRConfig = (
   creditor: {
     name: company,
     address: companyAddress.address_line1.substring(0, 70), // Street name only
-    houseNumber: companyAddress.address_line2 != null ? companyAddress.address_line2.substring(0, 16) : undefined, // Building/house number for Type "S" structured format
+    houseNumber: companyAddress.address_line2 != null && companyAddress.address_line2.trim() !== "" ? companyAddress.address_line2.substring(0, 16) : "", // Building/house number - empty string forces Type "S"
     zip: companyAddress.pincode, // Postal code (kept as string for Type "S")
     city: companyAddress.city.substring(0, 35), // City name
     account: iban, // QR-IBAN
@@ -52,7 +52,7 @@ export const generateQRConfig = (
   debtor: {
     name: customer.substring(0, 70),
     address: customerAddress.address_line1.substring(0, 70), // Street name only
-    houseNumber: customerAddress.address_line2 != null ? customerAddress.address_line2.substring(0, 16) : undefined, // Building/house number for Type "S" structured format
+    houseNumber: customerAddress.address_line2 != null && customerAddress.address_line2.trim() !== "" ? customerAddress.address_line2.substring(0, 16) : "", // Building/house number - empty string forces Type "S"
     zip: customerAddress.pincode, // Postal code (kept as string for Type "S")
     city: customerAddress.city.substring(0, 35), // City name
     country: customerAddressCode, // Country code
