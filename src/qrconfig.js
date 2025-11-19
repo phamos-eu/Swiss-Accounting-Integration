@@ -41,20 +41,20 @@ export const generateQRConfig = (
   amount,
   reference,
   creditor: {
-    name: company, //
-    address: companyAddress.address_line1.substring(0, 70),
-    buildingNumber: companyAddress.address_line2 != null ? companyAddress.address_line2.substring(0,16) : undefined, // Optional Address line2, according to Type "S" specification
-    zip: parseInt(companyAddress.pincode), // Bank Account  Code
-    city: companyAddress.city, // Bank Account City
-    account: iban, // Bank Account Iban
-    country: companyAddressCode, // Bank Country
+    name: company,
+    address: companyAddress.address_line1.substring(0, 70), // Street name only
+    houseNumber: companyAddress.address_line2 != null ? companyAddress.address_line2.substring(0, 16) : undefined, // Building/house number for Type "S" structured format
+    zip: companyAddress.pincode, // Postal code (kept as string for Type "S")
+    city: companyAddress.city.substring(0, 35), // City name
+    account: iban, // QR-IBAN
+    country: companyAddressCode, // Country code
   },
   debtor: {
-    name: customer.substring(0, 70), // Customer Doctype,
-    address: customerAddress.address_line1.substring(0, 70),
-    buildingNumber: customerAddress.address_line2 != null ? customerAddress.address_line2.substring(0,16) : undefined, // Optional Address line2, according to Type "S" specification
-    zip: customerAddress.pincode, // Sales Invoice PCode
-    city: customerAddress.city, // Sales Invoice City
-    country: customerAddressCode, // Sales Invoice Country
+    name: customer.substring(0, 70),
+    address: customerAddress.address_line1.substring(0, 70), // Street name only
+    houseNumber: customerAddress.address_line2 != null ? customerAddress.address_line2.substring(0, 16) : undefined, // Building/house number for Type "S" structured format
+    zip: customerAddress.pincode, // Postal code (kept as string for Type "S")
+    city: customerAddress.city.substring(0, 35), // City name
+    country: customerAddressCode, // Country code
   },
 });
