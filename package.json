@@ -4,7 +4,8 @@
   "description": "A Grynn Qr Bill",
   "main": "src/index.js",
   "scripts": {
-    "production": "NODE_ENV=production webpack"
+    "production": "NODE_ENV=production webpack",
+    "postinstall": "node scripts/patch-swissqrbill.js"
   },
   "author": "",
   "license": "MIT",
