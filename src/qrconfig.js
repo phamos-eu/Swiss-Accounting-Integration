@@ -41,18 +41,20 @@ export const generateQRConfig = (
   amount,
   reference,
   creditor: {
-    name: company, //
-    address: ((companyAddress.address_line2 != null) ? `${companyAddress.address_line1} ${companyAddress.address_line2}` : companyAddress.address_line1), // Address Line 1 & line 2
-    zip: parseInt(companyAddress.pincode), // Bank Account  Code
-    city: companyAddress.city, // Bank Account City
-    account: iban, // Bank Account Iban
-    country: companyAddressCode, // Bank Country
+    name: company,
+    address: companyAddress.address_line1.substring(0, 70), // Street name only
+    houseNumber: companyAddress.address_line2 != null && companyAddress.address_line2.trim() !== "" ? companyAddress.address_line2.substring(0, 16) : "", // Building/house number - empty string forces Type "S"
+    zip: companyAddress.pincode, // Postal code (kept as string for Type "S")
+    city: companyAddress.city.substring(0, 35), // City name
+    account: iban, // QR-IBAN
+    country: companyAddressCode, // Country code
   },
   debtor: {
-    name: customer, // Customer Doctype
-    address: ((customerAddress.address_line2 != null) ? `${customerAddress.address_line1} ${customerAddress.address_line2}` :  customerAddress.address_line1), // Address Line 1 & 2
-    zip: customerAddress.pincode, // Sales Invoice PCode
-    city: customerAddress.city, // Sales Invoice City
-    country: customerAddressCode, // Sales Invoice Country
+    name: customer.substring(0, 70),
+    address: customerAddress.address_line1.substring(0, 70), // Street name only
+    houseNumber: customerAddress.address_line2 != null && customerAddress.address_line2.trim() !== "" ? customerAddress.address_line2.substring(0, 16) : "", // Building/house number - empty string forces Type "S"
+    zip: customerAddress.pincode, // Postal code (kept as string for Type "S")
+    city: customerAddress.city.substring(0, 35), // City name
+    country: customerAddressCode, // Country code
   },
 });
