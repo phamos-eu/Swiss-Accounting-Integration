@@ -15,9 +15,14 @@ fixtures = [{"dt": "Custom Field", "filters": [
 
 
 #custom icon which will be set as workspace icon in the sidebar menu
-app_include_icons = [
-	"swiss_accounting_integration/icons/custom_icons/icons.svg"
-]
+# DISABLED: the referenced sprite does not exist in this repo. Frappe fetches
+# the path and does insertAdjacentHTML() into #all-symbols with whatever comes
+# back, so a 404 injects the HTML error page (its <link> stylesheets included)
+# into the live desk DOM and breaks the layout. Re-enable only once the file is
+# committed -- and note v15 prepends /assets/ in app.html while v16 does not.
+# app_include_icons = [
+# 	"swiss_accounting_integration/icons/custom_icons/icons.svg"
+# ]
 
 #boot_session = "swiss_accounting_integration.boot.update_boot_context"
 

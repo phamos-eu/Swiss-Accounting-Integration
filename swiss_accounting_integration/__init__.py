@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 
 def gl(company, start_date, end_date):
@@ -12,7 +12,7 @@ def gl(company, start_date, end_date):
     import frappe
     from frappe.utils.file_manager import save_file
     from .utils import (
-        is_expense, get_expenses, getAccountNumber, docs, data, taxes, 
+        is_expense, get_expenses, get_item_wise_tax_rows, getAccountNumber, docs, data, taxes, 
         rounding_off, document_number, invoice as inv_f, amount as inv_amt,
         write_off, reset_docs, reset_accounts, payment_entry_amount
     )
@@ -57,8 +57,9 @@ def gl(company, start_date, end_date):
 
         # Taxes
         for tax in inv.taxes:
-            if is_expense(tax.item_wise_tax_detail):
-                for item in get_expenses(tax):
+            tax_rows = get_item_wise_tax_rows(tax, inv)
+            if is_expense(tax_rows):
+                for item in get_expenses(tax, tax_rows):
                     invoice['against_singles'].append({
                         'account':  getAccountNumber(item['account']),
                         'amount': item['amount'],
@@ -101,8 +102,9 @@ def gl(company, start_date, end_date):
             invoice['against_singles'].append(write_off(inv))
 
         for tax in inv.taxes:
-            if is_expense(tax.item_wise_tax_detail):
-                for item in get_expenses(tax):
+            tax_rows = get_item_wise_tax_rows(tax, inv)
+            if is_expense(tax_rows):
+                for item in get_expenses(tax, tax_rows):
                     invoice['against_singles'].append({
                         'account':  getAccountNumber(item['account']),
                         'amount': item['amount'],

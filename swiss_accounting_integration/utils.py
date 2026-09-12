@@ -4,31 +4,69 @@ from frappe.utils.file_manager import save_file
 import frappe
 
 
-def is_expense(txt):
+def get_item_wise_tax_rows(tax, parent_doc=None):
+    """
+    Return the per-item tax breakdown for one tax row as
+    [(rate, amount), ...], working on both ERPNext v15 and v16.
+
+    ERPNext v15 keeps this as a JSON blob on the tax row itself, in
+    `item_wise_tax_detail`, shaped {item_key: [rate, amount], ...}.
+
+    ERPNext v16 removed that field. The data now lives in the
+    `item_wise_tax_details` child table on the PARENT document (Sales
+    Invoice / Purchase Invoice / POS Invoice), where each row carries
+    `tax_row`, `rate` and `amount`. See the ERPNext patch
+    v15_0/migrate_old_item_wise_tax_detail_data_to_table.
+
+    Reading the v15 field first means an upgraded site keeps working
+    until the patch has run, rather than depending on ordering.
+    """
+    raw = tax.get('item_wise_tax_detail')
+    if raw:
+        try:
+            parsed = json.loads(raw)
+        except (ValueError, TypeError):
+            return []
+        rows = []
+        for value in parsed.values():
+            if isinstance(value, (list, tuple)) and len(value) >= 2:
+                rows.append((value[0], value[1]))
+        return rows
+
+    if parent_doc is None:
+        return []
+
+    return [
+        (row.rate, row.amount)
+        for row in (parent_doc.get('item_wise_tax_details') or [])
+        if row.get('tax_row') == tax.name
+    ]
+
+
+def is_expense(tax_rows):
     """
     Check Weather Entry in Tax
     is Expense or Not
+
+    Takes the rows returned by get_item_wise_tax_rows(); a zero rate on
+    the first entry marks the charge as an expense rather than a tax.
     """
-    js = json.loads(txt)
-    values = js.values()
-    for value in values:
-        tax = value[0]
-        return int(tax) == 0
+    for rate, _amount in tax_rows:
+        return int(rate) == 0
+    return False
 
 
-def get_expenses(tax):
+def get_expenses(tax, tax_rows):
     """
     Get Expenses from tax
     """
-    items = []
-    js = json.loads(tax.item_wise_tax_detail)
-    values = js.values()
-    for item in values:
-        items.append({
+    return [
+        {
             'account': tax.account_head,
-            'amount': item[1],
-        })
-    return items
+            'amount': amount,
+        }
+        for _rate, amount in tax_rows
+    ]
 
 
 def getAccountNumber(account_name):
